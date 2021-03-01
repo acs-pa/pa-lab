@@ -9,10 +9,11 @@ Maintainers:
 
 ## Descriere
 Aici vor fi publicate materialele pentru laboratoarele de la Proiectarea Algoritmilor:
-* `skel/labxy/`: skel pentru `labxy`
-* `demos/labxy/`: demo-uri pentru `labxy`
-* `tutorial/`: diverse tutoriale utile pentru PA
 * `docs/`: diverse materiale utile pentru PA
+* `tutorial/`: diverse tutoriale
+* `demos/labxy/`: demo pentru `labxy`
+* `skel/labxy/`: skel pentru `labxy`
+* `utils/`: scripturi de uz intern pentru echipa de PA
 
 ## Precizări și recomandări
 ### Limbaje
