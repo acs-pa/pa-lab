@@ -2,7 +2,7 @@
 
 Maintainers:
 - Miruna-Elena Banu (mirunaelena.banu@gmail.com)
-- Darius Neatu (neatudarius@gmail.com)
+- Darius-Florentin Neațu (neatudarius@gmail.com)
 
 ## Clase de complexități
 
