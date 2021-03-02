@@ -1,0 +1,16 @@
+BasedOnStyle: Webkit
+
+Language: Cpp
+NamespaceIndentation: None
+SpaceBeforeCpp11BracedList: false
+Cpp11BracedListStyle: true
+SortIncludes: false
+SpaceAfterTemplateKeyword: false
+ColumnLimit: 120
+AlwaysBreakTemplateDeclarations: Yes
+AlignAfterOpenBracket: DontAlign
+BinPackArguments: true
+BreakBeforeBraces: Attach
+AllowAllArgumentsOnNextLine: false
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortLambdasOnASingleLine: Inline
