@@ -7,7 +7,7 @@ int main() {
     }
 
     while (!q.empty()) {
-        int front = q.front();
+        auto front = q.front();
         q.pop();
         std::cout << front << " "; // 0 1 2 3 4
     }

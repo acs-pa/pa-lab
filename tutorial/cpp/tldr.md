@@ -173,6 +173,23 @@ while (!st.empty()) {
 // print: 3 2 1
 ```
 
+### queue
+You should always use `std::queue<T>`.
+
+```cpp
+std::queue<int> q;
+q.push(1);
+q.push(2);
+q.push(3);
+
+while (!st.empty()) {
+    auto top = st.top();
+    st.pop();
+    std::cout << top << "\n";
+}
+// print: 1 2 3
+```
+
 ### hashtable
 You should always use `std::unordered_map<K, V>`.
 
@@ -243,16 +260,16 @@ while (!minheap.empty()) {
 You should always use `std::multiset<T, std::greater<T>>`.
 
 ```cpp
-std::multiset<int> maxheap;
-maxheap.insert(1);
-maxheap.insert(12);
-maxheap.insert(6);
-maxheap.insert(1);
+std::multiset<int, std::greater<int>> maxheap;
+    maxheap.insert(1);
+    maxheap.insert(12);
+    maxheap.insert(6);
+    maxheap.insert(1);
 
-while (!minhmaxheapeap.empty()) {
-    auto top = *maxheap.begin();
-    minheamaxheapp.erase(maxheap.begin());
-    std::cout << top << "\n";
-}
+    while (!maxheap.empty()) {
+        auto top = *maxheap.begin();
+        maxheap.erase(maxheap.begin());
+        std::cout << top << "\n";
+    }
 // print: 12 6 1 1
 ```
