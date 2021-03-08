@@ -1,0 +1,60 @@
+#!/usr/bin/env python
+import sys
+
+
+def check(n, v, sol_len, sol):
+    i = 0
+    j = 0
+
+    while i < n and j < sol_len:
+        while i < n and v[i] != sol[j]:
+            i = i + 1
+
+        j = j + 1
+
+    return i < n
+
+
+def main():
+    [_, file_in, file_ref, file_out] = sys.argv
+
+    with open(file_in) as f:
+        [n, m] = [int(x) for x in next(f).split()]
+        [v, w] = [[int(x) for x in line.split()] for line in f]
+
+    with open(file_ref) as f:
+        [sol_len_ref] = [int(x) for x in next(f).split()]
+
+    with open(file_out) as f:
+        [sol_len] = [int(x) for x in next(f).split()]
+        [sol] = [[int(x) for x in line.split()] for line in f]
+
+    if sol_len_ref != sol_len:
+        sys.stdout.write('\nCerinta 2.1 gresita\t')
+        sys.exit(1)
+
+    sys.stdout.write('\nCerinta 2.1 rezolvata\t')
+
+    if len(sol) != sol_len:
+        sys.stdout.write(
+            '\nCerinta 2.2 gresita - solutia nu are lungimea de la 2.1.\t')
+        sys.exit(1)
+
+    if not check(n, v, sol_len, sol):
+        sys.stdout.write(
+            '\nCerinta 2.2 gresita - solutia nu este subsir in v. \t')
+        sys.exit(1)
+
+    if not check(m, w, sol_len, sol):
+        print(sol)
+        print(w)
+        sys.stdout.write(
+            '\nCerinta 2.2 gresita - solutia nu este subsir in w. \t')
+        sys.exit(1)
+
+    sys.stdout.write('Cerinta 2.2 rezolvata\t')
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()
