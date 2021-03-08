@@ -1,3 +1,6 @@
+.vscode/
+.history/
+
 # Compiled Object files
 *.slo
 *.lo
@@ -23,11 +26,11 @@
 *.exe
 *.out
 *.app
+*main
 
+# Temporary files
 *.tmp
 *.err.log
 *.class
 *bin*
-*main
 *.project
-
