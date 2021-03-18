@@ -181,12 +181,10 @@ class Gigel {
 
 int main() {
    Gigel g;         // print "Gigel()"
-   Gigel g2{};      // print "Gigel()"
-   Gigel g3{10};    // print "Gigel(10)"
+   Gigel g2();      // print "Gigel()"
    Gigel g4(5);     // print "Gigel(5)"
 }
 ```
-Note: In C++ we call the constructor for a class `Gigel` by using `Gigel()` or `Gigel{}`. It's strongly recommended to only use the `{}` notation in order to avoid some weird compile error (see [Most vexing parse C++](https://en.wikipedia.org/wiki/Most_vexing_parse)).
 
 #### Destructor
 A destructor is a **special method** that is called `when` the lifetime of an object ends. The purpose
@@ -268,7 +266,7 @@ A function which may have generic parameter(s) or return type.
 template<typename T>
 T func(...) {
     // ...
-    return T{...};
+    return T(...);
 }
 // usage example for int
 int x  = func<int>();
@@ -296,7 +294,7 @@ void func(K &a, V &v) {
     // ...
 }
 // usage example for int and struct Gigel
-func<int, Gigel>(123, Gigel{});
+func<int, Gigel>(123, Gigel());
 ```
 
 ```cpp
@@ -359,7 +357,7 @@ std::cout << mc_int.get_member() << "\n"; // print 123
 
 // usage example for class Gigel
 MyClass<Gigel> mc_gigel;
-mc_gigel.set_member(Gigel{}); // set a Gigel value
+mc_gigel.set_member(Gigel()); // set a Gigel value
 std::cout << mc_gigel.get_member() << "\n"; // print the Gigel value
 ```
 

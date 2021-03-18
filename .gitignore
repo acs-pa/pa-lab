@@ -34,3 +34,5 @@
 *.class
 *bin*
 *.project
+
+*.zip
