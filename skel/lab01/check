@@ -7,4 +7,5 @@ NUM_TESTS=(4 4 9 4)
 TIMEOUT_CPP=1
 TIMEOUT_JAVA=2
 
-source ../../utils/base_check.sh
+DIRNAME=$(realpath $(dirname "${0}"))
+source "${DIRNAME}"/../../utils/base_check.sh

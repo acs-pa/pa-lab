@@ -1,11 +1,12 @@
 # PA setup
 
 ## Compilers
+
 ### C++
 Use a recent `g++` version: at least `g++-7`, recommended `g++-10`.
 ```bash
 $ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
-$ sudo apt-get update
+$ sudo apt update
 $ sudo apt install g++-10
 # optional: install gcc-10
 ```
@@ -15,7 +16,7 @@ Use Java 10 or later.
 ```bash
 # java 11
 $ sudo add-apt-repository ppa:openjdk-r/ppa
-$ sudo apt-get update
+$ sudo apt update
 $ sudo apt install openjdk-11-jdk
 ```
 
@@ -51,6 +52,20 @@ $ java -version
 openjdk version "10" 2018-03-20
 OpenJDK Runtime Environment 18.3 (build 10+46)
 OpenJDK 64-Bit Server VM 18.3 (build 10+46, mixed mode)
+```
+## check deps
+
+Required for running the local checker.
+
+```bash
+# Python 3.0 or later
+$ sudo apt install python3 python
+
+# ensure that the "python" command exists
+# example: sudo apt install python-is-python3
+$ python --version
+Python 3.8.2
+
 ```
 
 ## IDE
@@ -100,6 +115,6 @@ $ sudo dpkg -i ~/Downloads/code_<version>.deb
 #### install
 ```bash
 $ sudo add-apt-repository ppa:mmk2410/intellij-idea
-$ sudo apt-get update
+$ sudo apt update
 $ sudo apt install intellij-idea-community
 ```

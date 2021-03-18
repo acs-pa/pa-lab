@@ -11,6 +11,10 @@ export COMPILE_ONLY=true
 
 declare -a labs=(
     "lab01"
+    "lab02"
+    "lab03"
+    "lab04"
+    "lab05"
 )
 
 for LAB in "${labs[@]}"; do
