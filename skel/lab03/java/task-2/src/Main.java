@@ -1,16 +1,17 @@
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     static class Result {
-        int len;
-        int[] subsequence;
+        int len; // rezultat pentru cerinta 1
+        ArrayList<Integer> subsequence; // rezultat pentru cerinta 2
 
         public Result() {
             len = 0;
-            subsequence = null;
+            subsequence = new ArrayList<>();
         }
     }
 
@@ -52,10 +53,8 @@ public class Main {
             try {
                 PrintWriter pw = new PrintWriter(new File(OUTPUT_FILE));
                 pw.printf("%d\n", result.len);
-                if (result.subsequence != null) {
-                    for (int i = 0; i < result.len; i++) {
-                        pw.printf("%d ", result.subsequence[i]);
-                    }
+                for (Integer x : result.subsequence) {
+                    pw.printf("%d ", x);
                 }
                 pw.printf("\n");
                 pw.close();

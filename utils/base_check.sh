@@ -279,12 +279,18 @@ cleanup() {
   done
 }
 
+
 pack() {
+  set -x
+  if [[ "${PACK_SOL}" = "yes" ]]; then
+    PACK_EXCLUDES=
+  else
+    PACK_EXCLUDES="--exclude **sol_**_**.cpp --exclude **sol_**_**.java"
+  fi
   skel_dir=$(basename "$(pwd)")
   command pushd .. &>/dev/null
   zip -FSr "${1}" "${skel_dir}/" \
-    --exclude **sol_**_**.cpp --exclude **sol_**_**.java \
-    --exclude **sol_diff.sh --exclude **sol_run.sh \
+    ${PACK_EXCLUDES} \
     &>/dev/null && echo "Done packing!"
   command popd &>/dev/null
 }
