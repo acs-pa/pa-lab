@@ -2,8 +2,8 @@
 using namespace std;
 
 struct Result {
-    int len;
-    vector<int> subsequence;
+    int len; // rezultat pentru cerinta 1
+    vector<int> subsequence; // rezultat pentru cerinta 2
 };
 
 class Task {
