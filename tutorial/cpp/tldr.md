@@ -3,6 +3,8 @@
 ## PA skel
 During the PA laboratories, you'll receive a skeleton for each task.
 
+NOTE: `should` on this page it's considered to be something like tips & tricks for PA (it may not be applicable in other contexts).
+
 ```cpp
 #include <bits/stdc++.h>
 using namespace std;
@@ -42,7 +44,7 @@ int main() {
     // * se apeleaza metoda solve()
     // (citire, rezolvare, printare)
     // * se distruge obiectul si se elibereaza memoria
-    auto* task = new (std::nothrow) Task{}; // hint: cppreference/nothrow
+    auto* task = new (std::nothrow) Task(); // hint: cppreference/nothrow
     if (!task) {
         std::cerr << "new failed: WTF are you doing? Throw your PC!\n";
         return -1;
@@ -75,7 +77,7 @@ Notes:
 
 ## C++ tweaks
 ### IO
-You should always use the C++ skel.
+You should always use the C++ `skel`.
 
 ```cpp
 // reading example: assume the input stream is named fin
@@ -112,7 +114,7 @@ You should always use `std::vector<T>`.
 // unitialized vector:
 // * use this when you don't know the size
 // * use push_back and pop_back to insert/remove elements
-std::vector<int> v{};
+std::vector<int> v;
 // read example
 for (int i = 0; i < n; ++i) {
     int x;
@@ -121,15 +123,15 @@ for (int i = 0; i < n; ++i) {
 }
 
 // vector with n zeros (0-indexed)
-std::vector<int> v{n, 0}; // use: v[0], v[1], ... , v[n - 1]
+std::vector<int> v(n, 0); // use: v[0], v[1], ... , v[n - 1]
 // read example
 for (int i = 0; i < n; ++i) {
     fin >> v[i];
 }
 
 // vector with n zeros (1-indexed)
-std::vector<int> v{n + 1, 0}; // use: v[1], v[2], ..., v[n] - e.g. for dynamic programming
-// note: v[0] it's allocated, but maybe not used
+std::vector<int> v(n + 1, 0); // use: v[1], v[2], ..., v[n] - e.g. for dynamic programming
+// note: v[0] it's allocated, but not used
 // read example:
 for (int i = 1; i <= n; ++i) {
     fin >> v[i];
@@ -142,7 +144,7 @@ You should always use `std::vector<std::vector<T>>`.
 ```cpp
 // most common usage at PA it's 1-indexed matrix for DP
 // n x m matrix filled with zeros
-std::vector<std::vector<int>> dp{n + 1, std::vector<int>{m + 1, 0}};
+std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
 // use:
 // dp[1][1], dp[1][2], ..., dp[1][m]
 // ...
