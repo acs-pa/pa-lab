@@ -12,22 +12,54 @@ private:
     int n, k;
 
     void read_input() {
-        ifstream fin("in");
-        fin >> n >> k;
-        fin.close();
+        std::cin >> n >> k;
+        // ifstream fin("in");
+        // fin >> n >> k;
+        // fin.close();
+    }
+
+    void back(int step, int stop, std::vector<int> &sol, vector<vector<int>> &all_sol)
+    {
+        if (step == stop) {
+            return;
+        }
+
+        all_sol.push_back(sol);
+
+        int last_elem = step == 0 ? 0 : sol[step - 1];
+        for (int x = last_elem + 1; x <= n; ++x) {
+            // DO
+            sol.push_back(x);
+            a
+            b
+
+
+            // RECURSION
+            back(step + 1, stop, sol, all_sol);
+
+            // UNDO
+            !b
+            !a
+            sol.pop_back();
+
+        }
     }
 
     vector<vector<int>> get_result() {
-        vector<vector<int>> all;
+        std::unordered_set<int> domain;
+        for (int i = 0; i < n; ++i) {
+            domain.insert(i + 1);
+        }
 
-        // TODO: Construiti toate aranjamentele de N luate cate K ale
-        // multimii {1, ..., N}.
-        //
-        // Pentru a adauga un nou aranjament:
-        //     vector<int> aranjament;
-        //     all.push_back(aranjament);
+        std::vector<int> sol;
 
-        return all;
+        std::unordered_set<int> used;
+        // used[i] = 1 - i a fost deja adaugat la solutie
+        // used[i] = 0 - opus
+
+        vector<vector<int>> all_sol;
+        back(0, n, sol, all_sol);
+        return all_sol;
     }
 
     void print_output(const vector<vector<int>>& result) {
