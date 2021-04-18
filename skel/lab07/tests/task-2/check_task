@@ -1,0 +1,53 @@
+#!/usr/bin/env python
+import sys
+
+
+def check(n, edges, sol):
+    node_to_position = {}
+    for i in range(len(sol)):
+        node_to_position[sol[i]] = i
+
+    for edge in edges:
+        [x, y] = edge
+        if node_to_position[x] > node_to_position[y]:
+            return False
+    return True
+
+
+def main():
+    [_, file_in, file_ref, file_out] = sys.argv
+
+    edges = []
+    node_to_position = {}
+
+    with open(file_in) as f:
+        [n, m] = [int(x) for x in next(f).split()]
+        for _ in range(m):
+            edges.append([int(x) for x in next(f).split()])
+
+    with open(file_out) as f:
+        sol = [int(x) for x in next(f).split()]
+
+    if len(sol) != n:
+        sys.stdout.write(
+            '\nSortarea topologica data nu are dimensiunea corespunzatoare (%d vs %d).\t' % (len(sol), n))
+        sys.exit(1)
+
+    allnodes = []
+    for i in range(n):
+        allnodes.append(i + 1)
+
+    if allnodes != sorted(sol):
+        sys.stdout.write('\nSortarea topologica nu contine toate nodurile.\t')
+        sys.exit(1)
+
+    if not check(n, edges, sol):
+        sys.stdout.write(
+            '\nSolutia gasita nu reprezinta o sortare topologica corecta.\t')
+        sys.exit(1)
+
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

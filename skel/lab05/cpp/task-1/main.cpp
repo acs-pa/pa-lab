@@ -49,9 +49,9 @@ int main() {
     // * se apeleaza metoda solve()
     // (citire, rezolvare, printare)
     // * se distruge obiectul si se elibereaza memoria
-    auto* task = new (std::nothrow) Task(); // hint: cppreference/nothrow
+    auto* task = new (nothrow) Task(); // hint: cppreference/nothrow
     if (!task) {
-        std::cerr << "new failed: WTF are you doing? Throw your PC!\n";
+        cerr << "new failed: WTF are you doing? Throw your PC!\n";
         return -1;
     }
     task->solve();
