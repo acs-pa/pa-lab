@@ -78,10 +78,10 @@ public class Main {
             // Indicatie: Folositi algoritmul lui Tarjan pentru SCC.
             //
 
-			ArrayList<ArrayList<Integer>> all_sccs = new ArrayList<>();
+            ArrayList<ArrayList<Integer>> all_sccs = new ArrayList<>();
             return all_sccs;
         }
-	}
+    }
 
     public static void main(String[] args) {
         new Task().solve();
