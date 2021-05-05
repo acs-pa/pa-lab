@@ -85,7 +85,7 @@ public class Main {
             // Indicatie: Folositi algoritmul lui Tarjan pentru CV.
             //
 
-			ArrayList<Integer> all_cvs = new ArrayList<>();
+            ArrayList<Integer> all_cvs = new ArrayList<>();
             return all_cvs;
         }
     }
