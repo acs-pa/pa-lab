@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+NUM_TASKS=4
+TASKS=(task-1 task-2 task-3 task-4)
+NUM_TESTS=(10 10 10 10)
+
+TIMEOUT_CPP=1
+TIMEOUT_JAVA=4
+
+# DN 2021: This is needed on some systems due to a high level of recursion on a big test (#8).
+ulimit -s unlimited
+
+DIRNAME=$(realpath $(dirname "${0}"))
+source "${DIRNAME}"/../../utils/base_check.sh
