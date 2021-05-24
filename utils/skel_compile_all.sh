@@ -19,6 +19,7 @@ declare -a labs=(
     "lab08"
     "lab09"
     "lab10"
+    "lab11"
 )
 
 for LAB in "${labs[@]}"; do
