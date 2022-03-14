@@ -181,7 +181,6 @@ class Gigel {
 
 int main() {
    Gigel g;         // print "Gigel()"
-   Gigel g2();      // print "Gigel()"
    Gigel g4(5);     // print "Gigel(5)"
 }
 ```
@@ -289,8 +288,8 @@ void func(T& a, T&b) {
 func<int>(123, 456);
 // example of template function
 // which has 2 parameters of type K and V
-template<typename K, typename B>
-void func(K &a, V &v) {
+template<typename K, typename V>
+void func(K &k, V &v) {
     // ...
 }
 // usage example for int and struct Gigel
