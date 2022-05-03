@@ -1,10 +1,7 @@
 # pa-lab
 
 Maintainers:
-* Darius-Florentin Neațu (neatudarius@gmail.com)
-* Cristian Olaru (cristianolaru99@gmail.com)
-* Mara Nicolae (maraioana9967@gmail.com)
-* Miruna-Elena Banu (mirunaelena.banu@gmail.com)
+* Darius Neațu (neatudarius@gmail.com)
 * Radu Nichita (radunichita99@gmail.com)
 
 ## Descriere
