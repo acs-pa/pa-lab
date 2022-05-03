@@ -3,10 +3,9 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 public class Main {
     static class Task {
@@ -16,25 +15,44 @@ public class Main {
         // numarul maxim de noduri
         public static final int NMAX = 50005;
 
+        // valoare mai mare decat orice distanta din graf
+        public static final int INF = (int) 1e9;
+
         // n = numar de noduri, m = numar de muchii
         int n, m;
         // nodul sursa
         int source;
 
-        public class Edge {
-            public int node;
+        // structura folosita pentru a stoca distanta, cat si vectorul de parinti
+        // folosind algoritmul Dijkstra
+        public class DijkstraResult {
+            List<Integer> d;
+            List<Integer> p;
+
+            DijkstraResult(List<Integer> _d, List<Integer> _p) {
+                d = _d;
+                p = _p;
+            }
+        };
+
+        public class Pair implements Comparable<Pair> {
+            public int destination;
             public int cost;
 
-            Edge(int _node, int _cost) {
-                node = _node;
+            Pair(int _destination, int _cost) {
+                destination = _destination;
                 cost = _cost;
+            }
+
+            public int compareTo(Pair rhs) {
+                return Integer.compare(cost, rhs.cost);
             }
         }
 
-        // adj[x] = lista de adiacenta a nodului x
-        // Edge e inseamna ca exista muchie de la x la e.node (y) de cost e.cost (w): (x, y, w)
+        // adj[node] = lista de adiacenta a nodului node
+        // perechea (neigh, w) semnifica arc de la node la neigh de cost w
         @SuppressWarnings("unchecked")
-        ArrayList<Edge> adj[] = new ArrayList[NMAX];
+        ArrayList<Pair> adj[] = new ArrayList[NMAX];
 
         public void solve() {
             readInput();
@@ -44,7 +62,7 @@ public class Main {
         private void readInput() {
             try {
                 Scanner sc = new Scanner(new BufferedReader(new FileReader(
-                                INPUT_FILE)));
+                        INPUT_FILE)));
                 n = sc.nextInt();
                 m = sc.nextInt();
                 source = sc.nextInt();
@@ -57,7 +75,7 @@ public class Main {
                     x = sc.nextInt();
                     y = sc.nextInt();
                     w = sc.nextInt();
-                    adj[x].add(new Edge(y, w));
+                    adj[x].add(new Pair(y, w));
                 }
                 sc.close();
             } catch (IOException e) {
@@ -65,13 +83,13 @@ public class Main {
             }
         }
 
-        private void writeOutput(ArrayList<Integer> result) {
+        private void writeOutput(DijkstraResult result) {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(
-                                OUTPUT_FILE));
+                        OUTPUT_FILE));
                 StringBuilder sb = new StringBuilder();
                 for (int i = 1; i <= n; i++) {
-                    sb.append(result.get(i)).append(' ');
+                    sb.append(result.d.get(i)).append(' ');
                 }
                 sb.append('\n');
                 bw.write(sb.toString());
@@ -81,24 +99,33 @@ public class Main {
             }
         }
 
-        private ArrayList<Integer> getResult() {
+        private DijkstraResult getResult() {
             //
             // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
             // folosind Dijkstra pe graful orientat cu n noduri, m arce stocat in adj.
-            //    d[node] = costul minim / lungimea minima a unui drum de la source la
-            //    nodul node;
-            //    d[source] = 0;
-            //    d[node] = -1, daca nu se poate ajunge de la source la node.
+            //
+            // d[node] = costul minim / lungimea minima a unui drum de la source la nodul
+            // node
+            // * d[source] = 0;
+            // * d[node] = -1, daca nu se poate ajunge de la source la node.
+            //
             // Atentie:
             // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
-            //    adj[x].get(i) == Edge(y, w): muchie (x, y) de cost w -> (x, y, w)
+            // adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar
+            // (node, neigh) are cost w.
             //
+            List<Integer> d = new ArrayList<>();
+            List<Integer> p = new ArrayList<>();
 
-            ArrayList<Integer> d = new ArrayList<>();
-            for (int i = 0; i <= n; i++)
+            for (int i = 0; i <= n; i++) {
                 d.add(0);
-            return d;
+                p.add(0);
+            }
+
+            return new DijkstraResult(d, p);
+
         }
+
     }
 
     public static void main(String[] args) {

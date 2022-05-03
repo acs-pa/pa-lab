@@ -19,17 +19,27 @@ public class Main {
         // n = numar de noduri
         int n;
 
-        // w[x][y] = constul muchiei de la x la y: (x, y, w[x][y])
+        // w[x]y] = constul muchiei de la x la y: (x, y, w[x][y])
         // (w[x][y] = 0 - muchia lipseste)
+        //
+        // In aceasta problema, costurile sunt strict pozitive.
         int w[][];
 
-        // d[x][y] = lungimea drumului minim de la x la y
-        int d[][];
+        // structura folosita pentru a stoca matricea de distante, matricea
+        // de parinti folosind algoritmul RoyFloyd.
+        public class RoyFloydResult {
+            int d[][];
+            int p[][];
+
+            RoyFloydResult(int _d[][], int _p[][]) {
+                d = _d;
+                p = _p;
+            }
+        };
 
         public void solve() {
             readInput();
-            getResult();
-            writeOutput();
+            writeOutput(getResult());
         }
 
         private void readInput() {
@@ -37,11 +47,10 @@ public class Main {
                 Scanner sc = new Scanner(new BufferedReader(new FileReader(
                                 INPUT_FILE)));
                 n = sc.nextInt();
-                d = new int[n + 1][n + 1];
                 w = new int[n + 1][n + 1];
-                for (int x = 1; x <= n; x++) {
-                    for (int y = 1; y <= n; y++) {
-                        w[x][y] = sc.nextInt();
+                for (int i = 1; i <= n; i++) {
+                    for (int j = 1; j <= n; j++) {
+                        w[i][j] = sc.nextInt();
                     }
                 }
                 sc.close();
@@ -50,14 +59,14 @@ public class Main {
             }
         }
 
-        private void writeOutput() {
+        private void writeOutput(RoyFloydResult res) {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(
                                 OUTPUT_FILE));
                 StringBuilder sb = new StringBuilder();
                 for (int x = 1; x <= n; x++) {
                     for (int y = 1; y <= n; y++) {
-                        sb.append(d[x][y]).append(' ');
+                        sb.append(res.d[x][y]).append(' ');
                     }
                     sb.append('\n');
                 }
@@ -68,7 +77,7 @@ public class Main {
             }
         }
 
-        private void getResult() {
+        private RoyFloydResult getResult() {
             //
             // TODO: Gasiti distantele minime intre oricare doua noduri, folosind
             // Roy-Floyd pe graful orientat cu n noduri, m arce stocat in matricea
@@ -76,16 +85,20 @@ public class Main {
             //
             // Atentie:
             // O muchie (x, y, w) este reprezentata astfel in matricea ponderilor:
-            //    w[x][y] = w;
+            //  w[x][y] = w;
             // Daca nu exista o muchie intre doua noduri x si y, in matricea
             // ponderilor se va afla valoarea 0:
-            //    w[x][y] = 0;
+            //  w[x][y] = 0;
             //
             // Trebuie sa populati matricea d[][] (declarata mai sus):
-            //    d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
-            //    d[x][y] = 0 daca nu exista drum intre x si y.
+            //  d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
+            //  d[x][y] = 0 daca nu exista drum intre x si y.
             //          * implicit: d[x][x] = 0 (distanta de la un nod la el insusi).
             //
+            int d[][] = new int[n + 1][n + 1];
+            int p[][] = new int[n + 1][n + 1];
+
+            return new RoyFloydResult(d, p);
         }
     }
 

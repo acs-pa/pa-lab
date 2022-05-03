@@ -7,6 +7,17 @@ using namespace std;
 // valoare mai mare decat orice distanta din graf
 #define INF (1 << 30)
 
+// structura folosita pentru a stoca distanta, cat si vectorul de parinti
+// folosind algoritmul Dijkstra
+struct DijkstraResult {
+    vector<int> d;
+    vector<int> p;
+
+    DijkstraResult(const vector<int>& d, const vector<int>& p)
+        : d(d)
+        , p(p) { }
+};
+
 class Task {
 public:
     void solve() {
@@ -17,8 +28,8 @@ public:
 private:
     // n = numar de noduri, m = numar de muchii
     int n, m;
-    // adj[x] = lista de adiacenta a nodului x
-    // perechea (y, w) semnifica muchie de la x la y de cost w: (x, y, w)
+    // adj[node] = lista de adiacenta a nodului node
+    // perechea (neigh, w) semnifica arc de la node la neigh de cost w
     vector<pair<int, int>> adj[NMAX];
     // nodul sursa
     int source;
@@ -33,28 +44,29 @@ private:
         fin.close();
     }
 
-    vector<int> get_result() {
+    DijkstraResult get_result() {
         //
         // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
         // folosind Dijkstra pe graful orientat cu n noduri, m arce stocat in adj.
-        //     d[node] = costul minim / lungimea minima a unui drum de la source la nodul
-        // node;
-        //     d[source] = 0;
-        //     d[node] = -1, daca nu se poate ajunge de la source la node.
+        //
+        // d[node] = costul minim / lungimea minima a unui drum de la source la nodul node
+        //     * d[source] = 0;
+        //     * d[node] = -1, daca nu se poate ajunge de la source la node.
         //
         // Atentie:
         // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
-        //     adj[x][i] == (y, w) - unde y este al i-lea vecin al lui x, iar (x, y) are cost w: (x, y, w)
+        //     adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar (node, neigh) are cost w.
         //
-
-        vector<int> d(n + 1, 0);
-        return d;
+        vector<int> d(n + 1);
+        vector<int> p(n + 1);
+        return {d, p};
     }
 
-    void print_output(vector<int> result) {
+    void print_output(const DijkstraResult& result) {
         ofstream fout("out");
-        for (int i = 1; i <= n; i++) {
-            fout << result[i] << " ";
+        const auto& [d, _] = result;
+        for (int node = 1; node <= n; node++) {
+            fout << d[node] << " ";
         }
         fout << "\n";
         fout.close();
