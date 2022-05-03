@@ -2,104 +2,65 @@
 using namespace std;
 
 // numarul maxim de noduri
-#define NMAX 200005
-
-// Structura de date descrisa aici https://infoarena.ro/problema/disjoint.
-class DisjointSet {
-private:
-    vector<int> parent, size;
-
-public:
-    // Se initializeaza n paduri
-    DisjointSet(int n)
-        : parent(n + 1)
-        , size(n + 1) {
-        for (int i = 1; i <= n; ++i) {
-            // fiecare padure contine un nod initial
-            parent[i] = i;
-            size[i] = 1;
-        }
-    }
-
-    // returneaza radacina arborelui din care face parte node
-    int find_root(int node) {
-        if (node == parent[node]) {
-            return node;
-        }
-        return parent[node] = find_root(parent[node]);
-    }
-
-    // reuneste arborii lui root1 si root2 intr-un singur arbore
-    void merge_forests(int root1, int root2) {
-        if (size[root1] <= size[root2]) {
-            size[root2] += size[root1];
-            parent[root1] = root2;
-        } else {
-            size[root1] += size[root2];
-            parent[root2] = root1;
-        }
-    }
-};
+#define NMAX 105
 
 class Task {
 public:
     void solve() {
         read_input();
-        print_output(get_result());
+        compute();
+        print_output();
     }
 
 private:
-    // n = numar de noduri, m = numar de muchii
-    int n, m;
+    // n = numar de noduri
+    int n;
 
-    // (x, y, w) - muchie de la x la y de cost w
-    typedef tuple<int, int, int> edge;
+    // w[x]y] = costul muchiei de la x la y: (x, y, w[x][y])
+    // (w[x][y] = 0 - muchia lipseste)
+    int w[NMAX][NMAX];
 
-    // edges = toate muchiile din graf
-    vector<edge> edges;
+    // d[x][y] = lungimea drumului minim de la x la y
+    int d[NMAX][NMAX];
 
     void read_input() {
         ifstream fin("in");
-        fin >> n >> m;
-        for (int i = 1, x, y, w; i <= m; i++) {
-            fin >> x >> y >> w;
-            edges.push_back({x, y, w});
+        fin >> n;
+        for (int x = 1; x <= n; x++) {
+            for (int y = 1; y <= n; y++) {
+                fin >> w[x][y];
+            }
         }
         fin.close();
     }
 
-    int get_result() {
+    void compute() {
         //
-        // TODO: Calculati costul minim al unui arbore de acoperire
-        // folosind algoritmul lui Kruskal.
+        // TODO: Gasiti distantele minime intre oricare doua noduri, folosind Roy-Floyd
+        // pe graful orientat cu n noduri, m arce stocat in matricea ponderilor w
+        // (declarata mai sus).
         //
-        // Pentru a construi un tuple:
-        // int a, b, c;
-        // tuple<int, int, int> t = make_tuple(a, b, c);
+        // Atentie:
+        // O muchie (x, y, w[x][y]) este reprezentata astfel in matricea ponderilor:
+        //     w[x][y] este costul muchiei de la x la y
+        // Daca nu exista o muchie intre doua noduri x si y, in matricea ponderilor:
+        //     w[x][y] = 0;
         //
-        // Pentru a accesa elementele dintr-un tuple, exista 2 variante:
-        // tuple<int, int, int> t;
-        // int a, b, c;
-        // tie(a, b, c) = t;
+        // Trebuie sa populati matricea d[][] (declarata mai sus):
+        //     d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
+        //     d[x][y] = 0 daca nu exista drum intre x si y.
+        //          * implicit: d[x][x] = 0 (distanta de la un nod la el insusi).
         //
-        // tuple<int, int, int> t;
-        // int a = get<0>(t);
-        // int b = get<1>(t);
-        // int c = get<2>(t);
-        //
-        // Vi se da implementata structura de Paduri de multimi disjuncte.
-        // Utilizare:
-        // DisjointSet dj(n);
-        // dj.find(x);
-        // dj.reunion(x, y);
-        //
-
-        return 0;
     }
 
-    void print_output(int result) {
+    void print_output() {
         ofstream fout("out");
-        fout << result << "\n";
+        for (int x = 1; x <= n; x++) {
+            for (int y = 1; y <= n; y++) {
+                fout << d[x][y] << ' ';
+            }
+            fout << '\n';
+        }
         fout.close();
     }
 };

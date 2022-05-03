@@ -2,62 +2,65 @@
 using namespace std;
 
 // numarul maxim de noduri
-#define NMAX 105
+#define NMAX 50005
+
+// valoare mai mare decat orice distanta din graf
+#define INF (1 << 30)
 
 class Task {
 public:
     void solve() {
         read_input();
-        compute();
-        print_output();
+        print_output(get_result());
     }
 
 private:
-    // n = numar de noduri
-    int n;
-
-    // w[x]y] = costul muchiei de la x la y: (x, y, w[x][y])
-    // (w[x][y] = 0 - muchia lipseste)
-    int w[NMAX][NMAX];
-
-    // d[x][y] = lungimea drumului minim de la x la y
-    int d[NMAX][NMAX];
+    // n = numar de noduri, m = numar de muchii
+    int n, m;
+    // adj[x] = lista de adiacenta a nodului x
+    // perechea (y, w) semnifica muchie de la x la y de cost w: (x, y, w)
+    vector<pair<int, int>> adj[NMAX];
+    // nodul sursa
+    int source;
 
     void read_input() {
         ifstream fin("in");
-        fin >> n;
-        for (int x = 1; x <= n; x++) {
-            for (int y = 1; y <= n; y++) {
-                fin >> w[x][y];
-            }
+        fin >> n >> m >> source;
+        for (int i = 1, x, y, w; i <= m; i++) {
+            fin >> x >> y >> w;
+            adj[x].push_back({y, w});
         }
         fin.close();
     }
 
-    void compute() {
+    vector<int> get_result() {
         //
-        // TODO: Gasiti distantele minime intre oricare doua noduri, folosind Roy-Floyd
-        // pe graful orientat cu n noduri, m arce stocat in matricea ponderilor w
-        // (declarata mai sus).
+        // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
+        // folosind Bellman-Ford pe graful orientat cu n noduri, m arce stocat in adj.
+        //     d[node] = costul minim / lungimea minima a unui drum de la source la nodul
+        // node;
+        //     d[source] = 0;
+        //     d[node] = -1, daca nu se poate ajunge de la source la node.
         //
         // Atentie:
-        // O muchie (x, y, w[x][y]) este reprezentata astfel in matricea ponderilor:
-        //     w[x][y] este costul muchiei de la x la y
-        // Daca nu exista o muchie intre doua noduri x si y, in matricea ponderilor:
-        //     w[x][y] = 0;
+        // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
+        //     adj[x][i] == (y, w) - unde y este al i-lea vecin al lui x, iar (x, y) are cost w: (x, y, w)
         //
-        // Trebuie sa populati matricea d[][] (declarata mai sus):
-        //     d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
-        //     d[x][y] = 0 daca nu exista drum intre x si y.
-        //          * implicit: d[x][x] = 0 (distanta de la un nod la el insusi).
+        // In cazul in care exista ciclu de cost negativ, returnati un vector gol:
+        //     return {};
         //
+
+        vector<int> d(n + 1, 0);
+        return d;
     }
 
-    void print_output() {
+    void print_output(vector<int> result) {
         ofstream fout("out");
-        for (int x = 1; x <= n; x++) {
-            for (int y = 1; y <= n; y++) {
-                fout << d[x][y] << ' ';
+        if (result.size() == 0) {
+            fout << "Ciclu negativ!\n";
+        } else {
+            for (int i = 1; i <= n; i++) {
+                fout << result[i] << ' ';
             }
             fout << '\n';
         }

@@ -1,13 +1,12 @@
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-
 
 public class Main {
     static class Task {
@@ -15,34 +14,22 @@ public class Main {
         public static final String OUTPUT_FILE = "out";
 
         // numarul maxim de noduri
-        public static final int NMAX = 200005;
+        public static final int NMAX = 105;
 
-        // n = numar de noduri, m = numar de muchii
-        int n, m;
+        // n = numar de noduri
+        int n;
 
-        int[] parent;
-        int[] size;
+        // w[x][y] = constul muchiei de la x la y: (x, y, w[x][y])
+        // (w[x][y] = 0 - muchia lipseste)
+        int w[][];
 
-        public class Edge {
-            public int node1;
-            public int node2;
-            public int cost;
-
-            Edge(int _node1, int _node2, int _cost) {
-                node1 = _node1;
-                node2 = _node2;
-                cost = _cost;
-            }
-        }
-
-        // adj[i] = lista de adiacenta a nodului i
-        // Edge e inseamna ca exista muchie de la i la e.node de cost e.cost
-        @SuppressWarnings("unchecked")
-        ArrayList<Edge> edges = new ArrayList<>();
+        // d[x][y] = lungimea drumului minim de la x la y
+        int d[][];
 
         public void solve() {
             readInput();
-            writeOutput(getResult());
+            getResult();
+            writeOutput();
         }
 
         private void readInput() {
@@ -50,20 +37,12 @@ public class Main {
                 Scanner sc = new Scanner(new BufferedReader(new FileReader(
                                 INPUT_FILE)));
                 n = sc.nextInt();
-                m = sc.nextInt();
-
-                for (int i = 1; i <= m; i++) {
-                    int x, y, w;
-                    x = sc.nextInt();
-                    y = sc.nextInt();
-                    w = sc.nextInt();
-                    edges.add(new Edge(x, y, w));
-                }
-                parent = new int[n + 1];
-                size = new int[n + 1];
-                for (int i = 1; i <= n; i++) {
-                    parent[i] = i;
-                    size[i] = 1;
+                d = new int[n + 1][n + 1];
+                w = new int[n + 1][n + 1];
+                for (int x = 1; x <= n; x++) {
+                    for (int y = 1; y <= n; y++) {
+                        w[x][y] = sc.nextInt();
+                    }
                 }
                 sc.close();
             } catch (IOException e) {
@@ -71,39 +50,42 @@ public class Main {
             }
         }
 
-        private void writeOutput(int result) {
+        private void writeOutput() {
             try {
-                PrintWriter pw = new PrintWriter(new File(OUTPUT_FILE));
-                pw.printf("%d\n", result);
-                pw.close();
+                BufferedWriter bw = new BufferedWriter(new FileWriter(
+                                OUTPUT_FILE));
+                StringBuilder sb = new StringBuilder();
+                for (int x = 1; x <= n; x++) {
+                    for (int y = 1; y <= n; y++) {
+                        sb.append(d[x][y]).append(' ');
+                    }
+                    sb.append('\n');
+                }
+                bw.write(sb.toString());
+                bw.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        private int findRoot(int node) {
-            if (node == parent[node]) {
-                return node;
-            }
-            return parent[node] = findRoot(parent[node]);
-        }
-
-        private void mergeForests(int root1, int root2) {
-            if (size[root1] <= size[root2]) {
-                size[root2] += size[root1];
-                parent[root1] = root2;
-            } else {
-                size[root1] += size[root2];
-                parent[root2] = root1;
-            }
-        }
-
-        private int getResult() {
+        private void getResult() {
             //
-            // TODO: Calculati costul minim al unui arbore de acoperire
-            // folosind algoritmul lui Kruskal.
+            // TODO: Gasiti distantele minime intre oricare doua noduri, folosind
+            // Roy-Floyd pe graful orientat cu n noduri, m arce stocat in matricea
+            // ponderilor w (declarata mai sus).
             //
-            return 0;
+            // Atentie:
+            // O muchie (x, y, w) este reprezentata astfel in matricea ponderilor:
+            //    w[x][y] = w;
+            // Daca nu exista o muchie intre doua noduri x si y, in matricea
+            // ponderilor se va afla valoarea 0:
+            //    w[x][y] = 0;
+            //
+            // Trebuie sa populati matricea d[][] (declarata mai sus):
+            //    d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
+            //    d[x][y] = 0 daca nu exista drum intre x si y.
+            //          * implicit: d[x][x] = 0 (distanta de la un nod la el insusi).
+            //
         }
     }
 

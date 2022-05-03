@@ -2,7 +2,44 @@
 using namespace std;
 
 // numarul maxim de noduri
-#define NMAX 1005
+#define NMAX 200005
+
+// Structura de date descrisa aici https://infoarena.ro/problema/disjoint.
+class DisjointSet {
+private:
+    vector<int> parent, size;
+
+public:
+    // Se initializeaza n paduri
+    DisjointSet(int n)
+        : parent(n + 1)
+        , size(n + 1) {
+        for (int i = 1; i <= n; ++i) {
+            // fiecare padure contine un nod initial
+            parent[i] = i;
+            size[i] = 1;
+        }
+    }
+
+    // returneaza radacina arborelui din care face parte node
+    int find_root(int node) {
+        if (node == parent[node]) {
+            return node;
+        }
+        return parent[node] = find_root(parent[node]);
+    }
+
+    // reuneste arborii lui root1 si root2 intr-un singur arbore
+    void merge_forests(int root1, int root2) {
+        if (size[root1] <= size[root2]) {
+            size[root2] += size[root1];
+            parent[root1] = root2;
+        } else {
+            size[root1] += size[root2];
+            parent[root2] = root1;
+        }
+    }
+};
 
 class Task {
 public:
@@ -15,49 +52,54 @@ private:
     // n = numar de noduri, m = numar de muchii
     int n, m;
 
-    // adj[i] = lista de adiacenta a nodului i
-    vector<int> adj[NMAX];
+    // (x, y, w) - muchie de la x la y de cost w
+    typedef tuple<int, int, int> edge;
 
-    // cap[i][j] = capacitatea arcului i -> j
-    int cap[NMAX][NMAX];
+    // edges = toate muchiile din graf
+    vector<edge> edges;
 
     void read_input() {
         ifstream fin("in");
         fin >> n >> m;
-        memset(cap, 0, sizeof cap);
-        for (int i = 1, x, y, c; i <= m; i++) {
-            // x -> y de capacitate c
-            fin >> x >> y >> c;
-            adj[x].push_back(y);
-            adj[y].push_back(x);
-
-            // Presupunem existenta mai multor arce x -> y cu capacitati c1, c2, ...
-            // Comprimam intr-un singur arc x -> y cu capacitate
-            // cap[x][y] = c1 + c2 + ...
-            cap[x][y] += c;
+        for (int i = 1, x, y, w; i <= m; i++) {
+            fin >> x >> y >> w;
+            edges.push_back({x, y, w});
         }
         fin.close();
     }
 
     int get_result() {
         //
-        // TODO: Calculati fluxul maxim pe graful orientat dat.
-        // Sursa este nodul 1.
-        // Destinatia este nodul n.
+        // TODO: Calculati costul minim al unui arbore de acoperire
+        // folosind algoritmul lui Kruskal.
         //
-        // In adj este stocat graful neorientat obtinut dupa ce se elimina orientarea
-        // arcelor, iar in cap sunt stocate capacitatile arcelor.
-        // De exemplu, un arc (x, y) de capacitate c va fi tinut astfel:
-        // cap[x][y] = c, adj[x] contine y, adj[y] contine x.
+        // Pentru a construi un tuple:
+        // int a, b, c;
+        // tuple<int, int, int> t = make_tuple(a, b, c);
         //
-        int max_flow = 0;
+        // Pentru a accesa elementele dintr-un tuple, exista 2 variante:
+        // tuple<int, int, int> t;
+        // int a, b, c;
+        // tie(a, b, c) = t;
+        //
+        // tuple<int, int, int> t;
+        // int a = get<0>(t);
+        // int b = get<1>(t);
+        // int c = get<2>(t);
+        //
+        // Vi se da implementata structura de Paduri de multimi disjuncte.
+        // Utilizare:
+        // DisjointSet dj(n);
+        // dj.find(x);
+        // dj.reunion(x, y);
+        //
 
-        return max_flow;
+        return 0;
     }
 
     void print_output(int result) {
         ofstream fout("out");
-        fout << result << '\n';
+        fout << result << "\n";
         fout.close();
     }
 };

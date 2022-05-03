@@ -1,12 +1,13 @@
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
+
 
 public class Main {
     static class Task {
@@ -14,17 +15,30 @@ public class Main {
         public static final String OUTPUT_FILE = "out";
 
         // numarul maxim de noduri
-        public static final int NMAX = 1005;
+        public static final int NMAX = 200005;
 
         // n = numar de noduri, m = numar de muchii
         int n, m;
 
-        // adj[i] = lista de adiacenta a nodului i
-        @SuppressWarnings("unchecked")
-        ArrayList<Integer> adj[] = new ArrayList[NMAX];
+        int[] parent;
+        int[] size;
 
-        // cap[i][j] = capacitatea arcului i -> j
-        int cap[][];
+        public class Edge {
+            public int node1;
+            public int node2;
+            public int cost;
+
+            Edge(int _node1, int _node2, int _cost) {
+                node1 = _node1;
+                node2 = _node2;
+                cost = _cost;
+            }
+        }
+
+        // adj[i] = lista de adiacenta a nodului i
+        // Edge e inseamna ca exista muchie de la i la e.node de cost e.cost
+        @SuppressWarnings("unchecked")
+        ArrayList<Edge> edges = new ArrayList<>();
 
         public void solve() {
             readInput();
@@ -38,23 +52,18 @@ public class Main {
                 n = sc.nextInt();
                 m = sc.nextInt();
 
-                cap = new int[n + 1][n + 1];
-                for (int i = 1; i <= n; i++) {
-                    adj[i] = new ArrayList<>();
-                }
                 for (int i = 1; i <= m; i++) {
-                    // x -> y de capacitate c
-                    int x, y, c;
+                    int x, y, w;
                     x = sc.nextInt();
                     y = sc.nextInt();
-                    c = sc.nextInt();
-                    adj[x].add(y);
-                    adj[y].add(x);
-
-                    // Presupunem existenta mai multor arce x -> y cu capacitati c1, c2, ...
-                    // Comprimam intr-un singur arc x -> y cu capacitate
-                    // cap[x][y] = c1 + c2 + ...
-                    cap[x][y] += c;
+                    w = sc.nextInt();
+                    edges.add(new Edge(x, y, w));
+                }
+                parent = new int[n + 1];
+                size = new int[n + 1];
+                for (int i = 1; i <= n; i++) {
+                    parent[i] = i;
+                    size[i] = 1;
                 }
                 sc.close();
             } catch (IOException e) {
@@ -64,8 +73,7 @@ public class Main {
 
         private void writeOutput(int result) {
             try {
-                PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(
-                                OUTPUT_FILE)));
+                PrintWriter pw = new PrintWriter(new File(OUTPUT_FILE));
                 pw.printf("%d\n", result);
                 pw.close();
             } catch (IOException e) {
@@ -73,20 +81,29 @@ public class Main {
             }
         }
 
+        private int findRoot(int node) {
+            if (node == parent[node]) {
+                return node;
+            }
+            return parent[node] = findRoot(parent[node]);
+        }
+
+        private void mergeForests(int root1, int root2) {
+            if (size[root1] <= size[root2]) {
+                size[root2] += size[root1];
+                parent[root1] = root2;
+            } else {
+                size[root1] += size[root2];
+                parent[root2] = root1;
+            }
+        }
+
         private int getResult() {
             //
-            // TODO: Calculati fluxul maxim pe graful orientat dat.
-            // Sursa este nodul 1.
-            // Destinatia este nodul n.
+            // TODO: Calculati costul minim al unui arbore de acoperire
+            // folosind algoritmul lui Kruskal.
             //
-            // In adj este stocat graful neorientat obtinut dupa ce se elimina orientarea
-            // arcelor, iar in cap sunt stocate capacitatile arcelor.
-            // De exemplu, un arc (x, y) de capacitate z va fi tinut astfel:
-            // cap[x][y] = z, adj[x] contine y, adj[y] contine x.
-            //
-            int maxFlow = 0;
-
-            return maxFlow;
+            return 0;
         }
     }
 

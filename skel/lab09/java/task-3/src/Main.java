@@ -14,22 +14,31 @@ public class Main {
         public static final String OUTPUT_FILE = "out";
 
         // numarul maxim de noduri
-        public static final int NMAX = 105;
+        public static final int NMAX = 50005;
 
-        // n = numar de noduri
-        int n;
+        // n = numar de noduri, m = numar de muchii
+        int n, m;
+        // nodul sursa
+        int source;
 
-        // w[x][y] = constul muchiei de la x la y: (x, y, w[x][y])
-        // (w[x][y] = 0 - muchia lipseste)
-        int w[][];
+        public class Edge {
+            public int node;
+            public int cost;
 
-        // d[x][y] = lungimea drumului minim de la x la y
-        int d[][];
+            Edge(int _node, int _cost) {
+                node = _node;
+                cost = _cost;
+            }
+        }
+
+        // adj[x] = lista de adiacenta a nodului x
+        // Edge e inseamna ca exista muchie de la x la e.node (y) de cost e.cost (w): (x, y, w)
+        @SuppressWarnings("unchecked")
+        ArrayList<Edge> adj[] = new ArrayList[NMAX];
 
         public void solve() {
             readInput();
-            getResult();
-            writeOutput();
+            writeOutput(getResult());
         }
 
         private void readInput() {
@@ -37,12 +46,17 @@ public class Main {
                 Scanner sc = new Scanner(new BufferedReader(new FileReader(
                                 INPUT_FILE)));
                 n = sc.nextInt();
-                d = new int[n + 1][n + 1];
-                w = new int[n + 1][n + 1];
-                for (int x = 1; x <= n; x++) {
-                    for (int y = 1; y <= n; y++) {
-                        w[x][y] = sc.nextInt();
-                    }
+                m = sc.nextInt();
+                source = sc.nextInt();
+
+                for (int i = 1; i <= n; i++)
+                    adj[i] = new ArrayList<>();
+                for (int i = 1; i <= m; i++) {
+                    int x, y, w;
+                    x = sc.nextInt();
+                    y = sc.nextInt();
+                    w = sc.nextInt();
+                    adj[x].add(new Edge(y, w));
                 }
                 sc.close();
             } catch (IOException e) {
@@ -50,14 +64,16 @@ public class Main {
             }
         }
 
-        private void writeOutput() {
+        private void writeOutput(ArrayList<Integer> result) {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(
                                 OUTPUT_FILE));
                 StringBuilder sb = new StringBuilder();
-                for (int x = 1; x <= n; x++) {
-                    for (int y = 1; y <= n; y++) {
-                        sb.append(d[x][y]).append(' ');
+                if (result.size() == 0) {
+                    sb.append("Ciclu negativ!\n");
+                } else {
+                    for (int i = 1; i <= n; i++) {
+                        sb.append(result.get(i)).append(' ');
                     }
                     sb.append('\n');
                 }
@@ -68,24 +84,27 @@ public class Main {
             }
         }
 
-        private void getResult() {
+        private ArrayList<Integer> getResult() {
             //
-            // TODO: Gasiti distantele minime intre oricare doua noduri, folosind
-            // Roy-Floyd pe graful orientat cu n noduri, m arce stocat in matricea
-            // ponderilor w (declarata mai sus).
+            // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
+            // folosind Bellman-Ford pe graful orientat cu n noduri, m arce stocat in
+            // adj.
+            //    d[node] = costul minim / lungimea minima a unui drum de la source la
+            //    nodul node;
+            //    d[source] = 0;
+            //    d[node] = -1, daca nu se poate ajunge de la source la node.
             //
             // Atentie:
-            // O muchie (x, y, w) este reprezentata astfel in matricea ponderilor:
-            //    w[x][y] = w;
-            // Daca nu exista o muchie intre doua noduri x si y, in matricea
-            // ponderilor se va afla valoarea 0:
-            //    w[x][y] = 0;
+            // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
+            //    adj[x].get(i) == Edge(y, w): muchie (x, y) de cost w -> (x, y, w)
             //
-            // Trebuie sa populati matricea d[][] (declarata mai sus):
-            //    d[x][y] = distanta minima intre nodurile x si y, daca exista drum.
-            //    d[x][y] = 0 daca nu exista drum intre x si y.
-            //          * implicit: d[x][x] = 0 (distanta de la un nod la el insusi).
+            // In cazul in care exista ciclu de cost negativ, returnati un vector gol:
+            //    return new ArrayList<Integer>();
             //
+            ArrayList<Integer> d = new ArrayList<>();
+            for (int i = 0; i <= n; i++)
+                d.add(0);
+            return d;
         }
     }
 
