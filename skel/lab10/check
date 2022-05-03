@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-NUM_TASKS=3
-TASKS=(task-1)
-NUM_TESTS=(10)
+NUM_TASKS=2
+TASKS=(task-1 task-2)
+NUM_TESTS=(10 10)
 
 TIMEOUT_CPP=1
-TIMEOUT_JAVA=10
+TIMEOUT_JAVA=8
 
 DIRNAME=$(realpath $(dirname "${0}"))
 source "${DIRNAME}"/../../utils/base_check.sh

@@ -3,11 +3,11 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Main {
     static class Task {
@@ -15,15 +15,13 @@ public class Main {
         public static final String OUTPUT_FILE = "out";
 
         // numarul maxim de noduri
-        public static final int NMAX = 50005;
+        public static final int NMAX = 1005;
 
         // valoare mai mare decat orice distanta din graf
         public static final int INF = (int) 1e9;
 
         // n = numar de noduri, m = numar de muchii
         int n, m;
-        // nodul sursa
-        int source;
 
         // structura folosita pentru a stoca distanta, vectorul de parinti
         // si daca s-a intalnit un ciclu de cost negativ folosind algoritmul
@@ -34,6 +32,33 @@ public class Main {
             boolean hasCycle;
 
             BellmanFordResult(boolean _hasCycle, List<Integer> _d, List<Integer> _p) {
+                hasCycle = _hasCycle;
+                d = _d;
+                p = _p;
+            }
+        };
+
+        // structura folosita pentru a stoca distanta, cat si vectorul de parinti
+        // folosind algoritmul Dijkstra
+        public class DijkstraResult {
+            List<Integer> d;
+            List<Integer> p;
+
+            DijkstraResult(List<Integer> _d, List<Integer> _p) {
+                d = _d;
+                p = _p;
+            }
+        };
+
+        // structura folosita pentru a stoca matricea de distante, matricea
+        // de parinti si daca s-a intalnit un ciclu de cost negativ
+        // folosind algoritmul lui Johnson.
+        public class JohnsonResult {
+            int d[][];
+            int p[][];
+            boolean hasCycle;
+
+            JohnsonResult(boolean _hasCycle, int _d[][], int _p[][]) {
                 hasCycle = _hasCycle;
                 d = _d;
                 p = _p;
@@ -82,7 +107,6 @@ public class Main {
                         INPUT_FILE)));
                 n = sc.nextInt();
                 m = sc.nextInt();
-                source = sc.nextInt();
 
                 for (int i = 1; i <= n; i++)
                     adj[i] = new ArrayList<>();
@@ -99,7 +123,7 @@ public class Main {
             }
         }
 
-        private void writeOutput(BellmanFordResult result) {
+        private void writeOutput(JohnsonResult result) {
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(
                         OUTPUT_FILE));
@@ -107,10 +131,12 @@ public class Main {
                 if (result.hasCycle) {
                     sb.append("Ciclu negativ!\n");
                 } else {
-                    for (int i = 1; i <= n; i++) {
-                        sb.append(result.d.get(i)).append(' ');
+                    for (int x = 1; x <= n; x++) {
+                        for (int y = 1; y <= n; y++) {
+                            sb.append(result.d[x][y]).append(' ');
+                        }
+                        sb.append('\n');
                     }
-                    sb.append('\n');
                 }
                 bw.write(sb.toString());
                 bw.close();
@@ -119,35 +145,32 @@ public class Main {
             }
         }
 
-        private BellmanFordResult getResult() {
+        private JohnsonResult getResult() {
             //
-            // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
-            // folosind Bellman-Ford pe graful orientat cu n noduri, m arce stocat in adj.
-            // d[node] = costul minim / lungimea minima a unui drum de la source la nodul
-            // node;
-            // d[source] = 0;
-            // d[node] = -1, daca nu se poate ajunge de la source la node.
+            // TODO: Gasiti distantele minime intre oricare doua noduri, folosind
+            // algoritmul lui Johnson pe graful orientat cu n noduri, m arce stocat in adk.
             //
             // Atentie:
             // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
-            // adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar
-            // (node, neigh) are cost w.
+            //     adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar (node, neigh) are cost w.
             //
-            // In cazul in care exista ciclu de cost negativ, returnati un obiect de tipul
-            // BellmanFordResult cu campul has_cycle setat pe true si doi vectori fara
-            // elemente;
             //
-
-            List<Integer> d = new ArrayList<>();
-            List<Integer> p = new ArrayList<>();
-
-            for (int i = 0; i <= n; i++) {
-                d.add(0);
-                p.add(0);
+            // Trebuie sa intoarceti o structura de tipul JohnsonResult, care contine membrii
+            //  * has_cycle = true, daca a fost intalnit un ciclu de cost negativ
+            //  * d = matricea de distante, unde se seteaza d[u][v] = 0, daca nu a fost gasit
+            // un drum de la u la v. d[u][u] = 0
+            //  * p = matricea de parinti, unde p[u][v] = parintele nodului v, pornind din nodul u.
+            // si p[u][v] = 0, daca v nu se poate atinge din nodul u
+            int d[][] = new int[n + 1][n + 1];
+            int p[][] = new int[n + 1][n + 1];
+            for (int u = 1; u <= n; u++) {
+                for (int v = 1; v <= n; v++) {
+                    d[u][v] = 0;
+                    p[u][v] = 0;
+                }
             }
 
-            return new BellmanFordResult(false, d, p);
-
+            return new JohnsonResult(false, d, p);
         }
     }
 
