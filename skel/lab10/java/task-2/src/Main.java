@@ -172,6 +172,120 @@ public class Main {
 
             return new JohnsonResult(false, d, p);
         }
+
+        private DijkstraResult dijkstra(int source, int nodes, ArrayList<Pair> adj[]) {
+            List<Integer> d = new ArrayList<>();
+            List<Integer> p = new ArrayList<>();
+
+            // Initializam distantele la infinit
+            for (int node = 0; node <= nodes; node++) {
+                d.add(INF);
+                p.add(0);
+            }
+
+            // Folosim un priority queue de Pair, desi elementele noastre nu sunt tocmai
+            // muchii.
+            // Vom folosi field-ul de cost ca si distanta pana la nodul respectiv.
+            // Observati ca am modificat clasa Pair ca sa implementeze interfata Comparable.
+            PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+            // Inseram nodul de plecare in pq si ii setam distanta la 0.
+            d.set(source, 0);
+            pq.add(new Pair(source, 0));
+
+            // Cat timp inca avem noduri de procesat
+            while (!pq.isEmpty()) {
+                // Scoatem head-ul cozii
+                int cost = pq.peek().cost;
+                int node = pq.poll().destination;
+
+                // In cazul in care un nod e introdus in coada cu mai multe distante (pentru ca
+                // distanta pana la el se imbunatateste in timp), vrem sa procesam doar
+                // versiunea sa cu distanta minima. Astfel, dam discard la intrarile din coada
+                // care nu au distanta optima.
+                if (cost > d.get(node)) {
+                    continue;
+                }
+
+                // Ii parcurgem toti vecinii.
+                for (Pair e : adj[node]) {
+                    int neigh = e.destination;
+                    int w = e.cost;
+
+                    // Se imbunatateste distanta?
+                    if (d.get(node) + w < d.get(neigh)) {
+                        // Actualizam distanta si parintele.
+                        d.set(neigh, d.get(node) + w);
+                        p.set(neigh, node);
+                        pq.add(new Pair(neigh, d.get(neigh)));
+                    }
+                }
+            }
+
+            // Toate nodurile ce au distanta INF nu pot fi atinse din sursa, asa ca setam
+            // distantele
+            // pe -1.
+            for (int i = 1; i <= nodes; i++)
+                if (d.get(i) == INF)
+                    d.set(i, -1);
+
+            return new DijkstraResult(d, p);
+        }
+
+        private BellmanFordResult bellman(int source, int nodes, List<Edge> edges) {
+            // Initializam distantele catre toate nodurile cu infinit
+
+            List<Integer> d = new ArrayList<>();
+            List<Integer> p = new ArrayList<>();
+
+            // Initializam distantele la infinit
+            for (int node = 0; node <= nodes; node++) {
+                d.add(INF);
+                p.add(0);
+            }
+
+            // Setez sursa la distanta 0.
+            d.set(source, 0);
+
+            // Fac N - 1 relaxari.
+            for (int i = 1; i <= nodes - 1; i++) {
+                // Parcurg toate muchiile:
+                for (Edge edge : edges) {
+                    int node = edge.node;
+                    int neigh = edge.neigh;
+                    int w = edge.w;
+                    // Se imbunatateste distanta?
+                    if (d.get(node) + w < d.get(neigh)) {
+                        // Actualizam distanta si parintele.
+                        d.set(neigh, d.get(node) + w);
+                        p.set(neigh, node);
+                    }
+                }
+            }
+
+            // Verific daca mai poate fi updatata distanta.
+            for (Edge edge : edges) {
+                int node = edge.node;
+                int neigh = edge.neigh;
+                int w = edge.w;
+                // Se imbunatateste distanta?
+                if (d.get(node) + w < d.get(neigh)) {
+                    // Am gasit un ciclu de cost negativ.
+                    return new BellmanFordResult(true, new ArrayList<>(), new ArrayList<>());
+                }
+            }
+
+            // Toate nodurile catre care distanta este inca INF nu pot fi atinse din
+            // nodul source, deci le setam pe -1.
+            for (int node = 1; node <= nodes; node++) {
+                if (d.get(node) == INF) {
+                    d.set(node, -1);
+                }
+            }
+
+            return new BellmanFordResult(false, d, p);
+        }
+
     }
 
     public static void main(String[] args) {
