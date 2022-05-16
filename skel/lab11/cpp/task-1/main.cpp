@@ -7,38 +7,76 @@ using namespace std;
 // Structura de date descrisa aici https://infoarena.ro/problema/disjoint.
 class DisjointSet {
 private:
-    vector<int> parent, size;
+    // parent[node] = radacina arborelui din care face parte node.
+    // (adica identificatorul componentei conexe curente)
+    vector<int> parent;
+
+    // size[node] = numarul de noduri din arborele in care se afla node acum.
+    vector<int> size;
 
 public:
-    // Se initializeaza n paduri
-    DisjointSet(int n)
-        : parent(n + 1)
-        , size(n + 1) {
-        for (int i = 1; i <= n; ++i) {
-            // fiecare padure contine un nod initial
-            parent[i] = i;
-            size[i] = 1;
+    // Se initializeaza n paduri.
+    DisjointSet(int nodes)
+        : parent(nodes + 1)
+        , size(nodes + 1) {
+        // Fiecare padure contine un nod initial.
+        for (int node = 1; node <= nodes; ++node) {
+            parent[node] = node;
+            size[node] = 1;
         }
     }
 
-    // returneaza radacina arborelui din care face parte node
-    int find_root(int node) {
+    // Returneaza radacina arborelui din care face parte node.
+    int setOf(int node) {
+        // Daca node este radacina, atunci am gasit raspunsul.
         if (node == parent[node]) {
             return node;
         }
-        return parent[node] = find_root(parent[node]);
+
+        // Altfel, urcam in sus din "radacina in radacina",
+        // actualizand pe parcurs radacinile pentru nodurile atinse.
+        parent[node] = setOf(parent[node]);
+        return parent[node];
     }
 
-    // reuneste arborii lui root1 si root2 intr-un singur arbore
-    void merge_forests(int root1, int root2) {
-        if (size[root1] <= size[root2]) {
-            size[root2] += size[root1];
-            parent[root1] = root2;
+    // Reuneste arborii lui x si y intr-un singur arbore,
+    // folosind euristica de reuniune a drumurilor dupa rank.
+    void reunion(int x, int y) {
+        // Obtinem radacinile celor 2 arbori
+        int rx = setOf(x), ry = setOf(y);
+
+        // Arborele mai mic este atasat la radacina arborelui mai mare.
+        if (size[rx] <= size[ry]) {
+            size[ry] += size[rx];
+            parent[rx] = ry;
         } else {
-            size[root1] += size[root2];
-            parent[root2] = root1;
+            size[rx] += size[ry];
+            parent[ry] = rx;
         }
     }
+};
+
+struct Edge {
+    int node;
+    int neigh;
+    int w;
+
+    Edge() { }
+    Edge(int node, int neigh, int w)
+        : node(node)
+        , neigh(neigh)
+        , w(w) { }
+};
+
+// structura folosita pentru a stoca MST
+struct MSTResult {
+    int cost; // costul MST-ului gasit
+
+    vector<pair<int, int>> edges; // muchiile din MST-ul gasit (ordinea nu conteaza)
+
+    MSTResult(int cost, const vector<pair<int, int>>& edges)
+        : cost(cost)
+        , edges(edges) { }
 };
 
 class Task {
@@ -52,54 +90,43 @@ private:
     // n = numar de noduri, m = numar de muchii
     int n, m;
 
-    // (x, y, w) - muchie de la x la y de cost w
-    typedef tuple<int, int, int> edge;
-
-    // edges = toate muchiile din graf
-    vector<edge> edges;
+    // muchiile din graf: (node, neigh, w) - muchie de la node la neigh de cost w
+    vector<Edge> edges;
 
     void read_input() {
         ifstream fin("in");
         fin >> n >> m;
         for (int i = 1, x, y, w; i <= m; i++) {
             fin >> x >> y >> w;
-            edges.push_back({x, y, w});
+            edges.push_back(Edge{x, y, w});
         }
         fin.close();
     }
 
-    int get_result() {
+    MSTResult get_result() {
         //
-        // TODO: Calculati costul minim al unui arbore de acoperire
-        // folosind algoritmul lui Kruskal.
+        // TODO: Calculati costul minim al unui MST folosind Kruskal.
         //
-        // Pentru a construi un tuple:
-        // int a, b, c;
-        // tuple<int, int, int> t = make_tuple(a, b, c);
         //
-        // Pentru a accesa elementele dintr-un tuple, exista 2 variante:
-        // tuple<int, int, int> t;
-        // int a, b, c;
-        // tie(a, b, c) = t;
-        //
-        // tuple<int, int, int> t;
-        // int a = get<0>(t);
-        // int b = get<1>(t);
-        // int c = get<2>(t);
-        //
-        // Vi se da implementata structura de Paduri de multimi disjuncte.
-        // Utilizare:
-        // DisjointSet dj(n);
-        // dj.find(x);
-        // dj.reunion(x, y);
+        // Vi se da implementarea DisjointSet. Exemple utilizare:
+        //      DisjointSet disjointset(n);
+        //      auto setX = disjointset.setOf(x);
+        //      ...
+        //      disjointset.reunion(x, y);
         //
 
-        return 0;
+        int cost = 0;
+        vector<pair<int, int>> mst;
+
+        return {cost, mst};
     }
 
-    void print_output(int result) {
+    void print_output(const MSTResult& res) {
         ofstream fout("out");
-        fout << result << "\n";
+        fout << res.cost << "\n";
+        for (const auto& [x, y] : res.edges) {
+            fout << x << " " << y << "\n";
+        }
         fout.close();
     }
 };
