@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-
 public class Main {
     static class Task {
         public static final String INPUT_FILE = "in";
@@ -20,25 +19,93 @@ public class Main {
         // n = numar de noduri, m = numar de muchii
         int n, m;
 
-        int[] parent;
-        int[] size;
+        // adj[node] = lista de adiacenta a nodului node
+        // Edge e inseamna ca exista muchie de la e.node la e.neigh de cost e.w
+        ArrayList<Edge> edges = new ArrayList<>();
 
-        public class Edge {
-            public int node1;
-            public int node2;
-            public int cost;
+        public class Pair {
+            public int x;
+            public int y;
 
-            Edge(int _node1, int _node2, int _cost) {
-                node1 = _node1;
-                node2 = _node2;
-                cost = _cost;
+            Pair(int _x, int _y) {
+                x = _x;
+                y = _y;
             }
         }
 
-        // adj[i] = lista de adiacenta a nodului i
-        // Edge e inseamna ca exista muchie de la i la e.node de cost e.cost
-        @SuppressWarnings("unchecked")
-        ArrayList<Edge> edges = new ArrayList<>();
+        public class Edge {
+            int node;
+            int neigh;
+            int w;
+
+            Edge(int _node, int _neigh, int _w) {
+                node = _node;
+                neigh = _neigh;
+                w = _w;
+            }
+        };
+
+        // structura folosita pentru a stoca MST
+        class MSTResult {
+            int cost; // costul MST-ului gasit
+
+            ArrayList<Pair> edges; // muchiile din MST-ul gasit (ordinea nu conteaza)
+
+            MSTResult(int _cost,  ArrayList<Pair> _edges) {
+                cost = _cost;
+                edges = _edges;
+            }
+        };
+
+        // Structura de date descrisa aici https://infoarena.ro/problema/disjoint.
+        public class DisjointSet {
+            // parent[node] = radacina arborelui din care face parte node.
+            // (adica identificatorul componentei conexe curente)
+            int [] parent;
+
+            // size[node] = numarul de noduri din arborele in care se afla node acum.
+            int [] size;
+
+            // Se initializeaza n paduri.
+            DisjointSet(int nodes) {
+                parent = new int[nodes + 1];
+                size   = new int[nodes + 1];
+                // Fiecare padure contine un nod initial.
+                for (int node = 1; node <= nodes; ++node) {
+                    parent[node] = node;
+                    size[node] = 1;
+                }
+            }
+
+            // Returneaza radacina arborelui din care face parte node.
+            int setOf(int node) {
+                // Daca node este radacina, atunci am gasit raspunsul.
+                if (node == parent[node]) {
+                    return node;
+                }
+
+                // Altfel, urcam in sus din "radacina in radacina",
+                // actualizand pe parcurs radacinile pentru nodurile atinse.
+                parent[node] = setOf(parent[node]);
+                return parent[node];
+            }
+
+            // Reuneste arborii lui x si y intr-un singur arbore,
+            // folosind euristica de reuniune a drumurilor dupa rank.
+            void reunion(int x, int y) {
+                // Obtinem radacinile celor 2 arbori
+                int rx = setOf(x), ry = setOf(y);
+
+                // Arborele mai mic este atasat la radacina arborelui mai mare.
+                if (size[rx] <= size[ry]) {
+                    size[ry] += size[rx];
+                    parent[rx] = ry;
+                } else {
+                    size[rx] += size[ry];
+                    parent[ry] = rx;
+                }
+            }
+        }
 
         public void solve() {
             readInput();
@@ -59,52 +126,42 @@ public class Main {
                     w = sc.nextInt();
                     edges.add(new Edge(x, y, w));
                 }
-                parent = new int[n + 1];
-                size = new int[n + 1];
-                for (int i = 1; i <= n; i++) {
-                    parent[i] = i;
-                    size[i] = 1;
-                }
                 sc.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        private void writeOutput(int result) {
+        private void writeOutput(MSTResult result) {
             try {
                 PrintWriter pw = new PrintWriter(new File(OUTPUT_FILE));
-                pw.printf("%d\n", result);
+                pw.printf("%d\n", result.cost);
+                for (Pair e : result.edges) {
+                    pw.printf("%d %d\n", e.x, e.y);
+                }
                 pw.close();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
-        private int findRoot(int node) {
-            if (node == parent[node]) {
-                return node;
-            }
-            return parent[node] = findRoot(parent[node]);
+        private MSTResult getResult() {
+            //
+            // TODO: Calculati costul minim al unui MST folosind Kruskal.
+            //
+            //
+            // Vi se da implementarea DisjointSet. Exemple utilizare:
+            //      DisjointSet disjointset = new DisjointSet(n);
+            //      int setX = disjointset.setOf(x);
+            //      ...
+            //      disjointset.reunion(x, y);
+            //
+            int cost = 0;
+            ArrayList<Pair> mst = new ArrayList<>();
+
+            return new MSTResult(cost, mst);
         }
 
-        private void mergeForests(int root1, int root2) {
-            if (size[root1] <= size[root2]) {
-                size[root2] += size[root1];
-                parent[root1] = root2;
-            } else {
-                size[root1] += size[root2];
-                parent[root2] = root1;
-            }
-        }
-
-        private int getResult() {
-            //
-            // TODO: Calculati costul minim al unui arbore de acoperire
-            // folosind algoritmul lui Kruskal.
-            //
-            return 0;
-        }
     }
 
     public static void main(String[] args) {
