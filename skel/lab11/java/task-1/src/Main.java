@@ -92,7 +92,7 @@ public class Main {
 
             // Reuneste arborii lui x si y intr-un singur arbore,
             // folosind euristica de reuniune a drumurilor dupa rank.
-            void reunion(int x, int y) {
+            void union(int x, int y) {
                 // Obtinem radacinile celor 2 arbori
                 int rx = setOf(x), ry = setOf(y);
 
@@ -154,7 +154,7 @@ public class Main {
             //      DisjointSet disjointset = new DisjointSet(n);
             //      int setX = disjointset.setOf(x);
             //      ...
-            //      disjointset.reunion(x, y);
+            //      disjointset.union(x, y);
             //
             int cost = 0;
             ArrayList<Pair> mst = new ArrayList<>();

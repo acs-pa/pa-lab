@@ -41,7 +41,7 @@ public:
 
     // Reuneste arborii lui x si y intr-un singur arbore,
     // folosind euristica de reuniune a drumurilor dupa rank.
-    void reunion(int x, int y) {
+    void _union(int x, int y) {
         // Obtinem radacinile celor 2 arbori
         int rx = setOf(x), ry = setOf(y);
 
@@ -112,7 +112,7 @@ private:
         //      DisjointSet disjointset(n);
         //      auto setX = disjointset.setOf(x);
         //      ...
-        //      disjointset.reunion(x, y);
+        //      disjointset.union(x, y);
         //
 
         int cost = 0;
