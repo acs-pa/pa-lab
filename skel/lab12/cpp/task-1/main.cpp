@@ -4,6 +4,21 @@ using namespace std;
 // numarul maxim de noduri
 #define NMAX 1005
 
+// valoare mai mare decat max_flow
+#define INF (1 << 30)
+
+// structura folosita pentru a stoca daca exista drum de ameliorare
+// si care este acesta.
+struct AugmentedBFS {
+    bool has_path;
+    vector<pair<int, int>> path;
+    AugmentedBFS(bool has_path, const vector<pair<int, int>>& path)
+        : has_path(has_path)
+        , path(path) { }
+
+    operator bool() const { return has_path; }
+};
+
 class Task {
 public:
     void solve() {
@@ -18,23 +33,23 @@ private:
     // adj[i] = lista de adiacenta a nodului i
     vector<int> adj[NMAX];
 
-    // cap[i][j] = capacitatea arcului i -> j
-    int cap[NMAX][NMAX];
+    // c[i][j] = capacitatea arcului i -> j
+    int c[NMAX][NMAX];
 
     void read_input() {
         ifstream fin("in");
         fin >> n >> m;
-        memset(cap, 0, sizeof cap);
-        for (int i = 1, x, y, c; i <= m; i++) {
-            // x -> y de capacitate c
-            fin >> x >> y >> c;
-            adj[x].push_back(y);
-            adj[y].push_back(x);
+        memset(c, 0, sizeof(c));
+        for (int i = 1, u, v, capacity; i <= m; i++) {
+            // x -> y de capacitate cap
+            fin >> u >> v >> capacity;
+            adj[u].push_back(v);
+            adj[v].push_back(u); // stocam si arcul invers
 
-            // Presupunem existenta mai multor arce x -> y cu capacitati c1, c2, ...
+            // Presupunem existenta mai multor arce u -> v cu capacitati c1, c2, ...
             // Comprimam intr-un singur arc x -> y cu capacitate
-            // cap[x][y] = c1 + c2 + ...
-            cap[x][y] += c;
+            // c[x][y] = c1 + c2 + ...
+            c[u][v] += capacity;
         }
         fin.close();
     }
@@ -47,12 +62,11 @@ private:
         //
         // In adj este stocat graful neorientat obtinut dupa ce se elimina orientarea
         // arcelor, iar in cap sunt stocate capacitatile arcelor.
-        // De exemplu, un arc (x, y) de capacitate c va fi tinut astfel:
-        // cap[x][y] = c, adj[x] contine y, adj[y] contine x.
+        // De exemplu, un arc (u, v) de capacitate cap va fi tinut astfel:
+        // c[u][v] = cap, adj[u] contine v, adj[v] contine u.
         //
-        int max_flow = 0;
-
-        return max_flow;
+        int total_flow = 0;
+        return total_flow;
     }
 
     void print_output(int result) {
