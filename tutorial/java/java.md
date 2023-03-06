@@ -337,4 +337,4 @@ class java.lang.String
 ```
 
 ## Collections
-Java Collections is the main group of data structures and algorithms. Please check [Java Collections](#collections.md).
+Java Collections is the main group of data structures and algorithms. Please check [Java Collections](./collections.md).
