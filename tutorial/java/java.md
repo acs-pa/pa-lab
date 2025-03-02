@@ -1,8 +1,5 @@
 # Java tutorial
 
-Maintainers:
-* Mara-Ioana Nicolae (maraioana9967@gmail.com)
-
 Links:
 * [docs.oracle/tutorial](https://docs.oracle.com/javase/tutorial): main Java documentation
     * [docs.oracle.com/java](https://docs.oracle.com/javase/tutorial/java): Java basics

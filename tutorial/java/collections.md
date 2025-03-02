@@ -1,8 +1,5 @@
 # Java Collections
-Maintainers:
-* Mara-Ioana Nicolae (maraioana9967@gmail.com)
-* Miruna-Elena Banu (mirunaelena.banu@gmail.com)
----
+
 **Java Collections** is a framework that provides implementation for various data structures and algorithms for storing and manipulating groups of objects. It provides Interfaces and Classes through the `java.util` package.
 
 ## ArrayList

@@ -1,9 +1,5 @@
 # C++ Tutorial
 
-Maintainers:
-* Radu Nichita (radunichita99@gmail.com)
-* Darius Neatu (neatudarius@gmail.com)
-
 ## TLDR
 A short summary for what you need / should use at PA can be found at [PA C++: TLDR](tldr.md).
 
