@@ -1,9 +1,5 @@
 # skel
 
-Maintainers:
-* Darius-Florentin Neațu (neatudarius@gmail.com)
-* Radu Nichita (radunichita99@gmail.com)
-
 Skeletons for the PA laboratories.
 
 ## skel

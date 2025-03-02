@@ -1,11 +1,5 @@
 # Cheatsheet complexități
 
-Maintainers:
-- Miruna-Elena Banu (mirunaelena.banu@gmail.com)
-- Darius-Florentin Neațu (neatudarius@gmail.com)
-- Radu Nichita (radunichita99@gmail.com)
-
-
 ## Clase de complexități
 
 - Acest document are ca scop asocierea unor algoritmi / clase de algoritmi cu anumite complexități.
