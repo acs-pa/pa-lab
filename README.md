@@ -8,7 +8,7 @@ Aici vor fi publicate materialele pentru laboratoarele de la Proiectarea Algorit
 * `skel/labxy/`: skel pentru `labxy`
 * `utils/`: scripturi de uz intern pentru echipa de PA
 
-# Maintainers:
+## Maintainers:
 * Darius Neațu (neatudarius@gmail.com)
 * Radu Nichita (radunichita99@gmail.com)
 
