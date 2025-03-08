@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <fstream>
+#include <iostream>
+#include <vector>
 using namespace std;
 
 // constanta modulo folosita in aceasta problema

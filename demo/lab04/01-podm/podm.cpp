@@ -1,8 +1,11 @@
-#include <bits/stdc++.h>
+#include <algorithm>        // min
+#include <iostream>         // cin, cout
+#include <limits>           // numeric_limits
+#include <vector>           // vector
 using namespace std;
 
 // kInf este valoarea maxima - "infinitul" nostru
-const unsigned long long kInf = std::numeric_limits<unsigned long long>::max();
+const unsigned long long kInf = numeric_limits<unsigned long long>::max();
 
 // T = O(n ^ 3)
 // S = O(n ^ 2) - stocam n x n intregi in tabloul dp

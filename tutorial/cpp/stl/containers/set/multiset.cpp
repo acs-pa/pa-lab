@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>     // cout
+#include <set>          // multiset
+using namespace std;
 
 int main() {
-    std::multiset<int> ms;
+    multiset<int> ms;
     ms.insert(1);
     ms.insert(2);
     ms.insert(3);
@@ -11,9 +13,9 @@ int main() {
 
     // iterate a set
     for (const auto& elem : ms) {
-        std::cout << elem << " ";
+        cout << elem << " ";
     }
-    std::cout << "\n";
+    cout << "\n";
 
     return 0;
 }

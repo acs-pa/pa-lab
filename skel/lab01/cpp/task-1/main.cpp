@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>         // cin, cout
+#include <fstream>          // ifstream, ofstream
+#include <vector>           // vector
 using namespace std;
 
 class Task {

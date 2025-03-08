@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <cstdlib>          // atoi
+#include <iostream>         // cin, cout
+#include <vector>           // vector
 using namespace std;
 
 bool check(vector<int>& solution) {
@@ -7,9 +9,9 @@ bool check(vector<int>& solution) {
 
 void printSolution(vector<int>& solution, vector<int>& domain, int stop) {
     for (auto i = 0; i < stop; ++i) {
-        std::cout << domain[solution[i]] << " ";
+        cout << domain[solution[i]] << " ";
     }
-    std::cout << "\n";
+    cout << "\n";
 }
 
 void back(int step, int stop, vector<int>& domain, vector<int>& solution) {

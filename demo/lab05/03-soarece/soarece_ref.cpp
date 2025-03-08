@@ -1,7 +1,10 @@
-#include <bits/stdc++.h>
+#include <iostream>         // cin, cout
+#include <fstream>          // ifstream
+#include <utility>          // pair
+#include <vector>           // vector
 using namespace std;
 
-bool check(vector<std::pair<int, int>>& solution, int walls[100][100]) {
+bool check(vector<pair<int, int>>& solution, int walls[100][100]) {
     for (unsigned i = 0; i < solution.size() - 1; ++i) {
         /* line_prev si col_prev reprezinta celula in care se afla soricelul la
         pasul i; line_next si col_next reprezinta celula in care se afla
@@ -23,7 +26,7 @@ bool check(vector<std::pair<int, int>>& solution, int walls[100][100]) {
     return true;
 }
 
-void printSolution(vector<std::pair<int, int>>& solution) {
+void printSolution(vector<pair<int, int>>& solution) {
     for (pair<int, int> s : solution) {
         cout << "(" << s.first << "," << s.second << ")->";
     }
@@ -31,7 +34,7 @@ void printSolution(vector<std::pair<int, int>>& solution) {
 }
 
 void back(
-    vector<std::pair<int, int>>& domain, int walls[100][100], vector<pair<int, int>>& solution, unsigned int max_iter) {
+    vector<pair<int, int>>& domain, int walls[100][100], vector<pair<int, int>>& solution, unsigned int max_iter) {
     /* daca am facut "max_iter" pasi ma opresc si verific daca este corecta
     solutia */
     if (solution.size() == max_iter) {
@@ -47,7 +50,7 @@ void back(
     for (unsigned int i = 0; i < domain.size(); ++i) {
         /* pastram elementul curent pentru a-l readauga in domeniu dupa
         apelarea recursiva */
-        std::pair<int, int> tmp = domain[i];
+        pair<int, int> tmp = domain[i];
 
         /* adaugam elementul curent la solutia candidat */
         solution.push_back(domain[i]);

@@ -1,4 +1,4 @@
-### std::vector
+### vector
 * [cppreference/vector](https://en.cppreference.com/w/cpp/container/vector)
 
 A resizable array container which:
@@ -7,7 +7,7 @@ A resizable array container which:
 
 Note: probably the most used container during the PA laboratories.
 
-`std::vector<T>` API (e.g. assume the `std::vector<T> v;` declaration):
+`vector<T>` API (e.g. assume the `vector<T> v;` declaration):
 * **size()**: e.g. `v.size();` (return the number of elements in the array; the valid / allocated elements are: `v[0], v[1], v[2], ..., v[ v.size() - 1 ]`)
 * **operator[]**: e.g. `v[i]` (access element -` O(1)`)
 *  **push_back()**: e.g. `v.push_back(some_value);` (insert at the end - `O(1)`)
@@ -21,10 +21,10 @@ Note: probably the most used container during the PA laboratories.
 C-like iteration using index.
 
 ```cpp
-#include <bits/stdc++.h>
+#include <vector>
 
 int main() {
-    std::vector<int> v;
+    vector<int> v;
 
     // operations on v - e.g. change elements
 
@@ -54,7 +54,7 @@ for (auto& element : container) {
 Example - vector of integers
 ```cpp
 int main() {
-    std::vector<int> v;
+    vector<int> v;
 
     // operations on v
     int sum = 0;
@@ -77,17 +77,17 @@ Most of the containers have an internal class called `iterator` which simulates 
 Note: You should use this method of iteration if and only if you want to remove or add elements in the middle of the container (a.k.a. not the first or the last element).
 
 ```cpp
-#include <bits/stdc++.h>
+#include <vector>
 
 int main() {
-    std::vector<int> v;
+    vector<int> v;
 
     // operations on v
 
     for (auto it = v.begin(); it != v.end(); ++it) {
         // do stuff with *it (similar to v[i])
         // e.g. *it = 2;                    // change current element to 2
-        // e.g. std::cout << *it << "\n";  // print current element
+        // e.g. cout << *it << "\n";  // print current element
     }
     return 0;
 }

@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <algorithm>   // sort
+#include <iostream>    // cout
+#include <vector>      // vector
 using namespace std;
 
 struct greater_comparator {

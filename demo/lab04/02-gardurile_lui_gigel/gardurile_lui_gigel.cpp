@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <cstring>          // memcpy
+#include <iostream>         // cin, cout
+#include <vector>           // vector
 using namespace std;
 
 #define MOD 1009

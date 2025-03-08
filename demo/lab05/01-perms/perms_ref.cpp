@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <cstdlib>          // atoi
+#include <iostream>         // cin, cout
+#include <vector>           // vector
 using namespace std;
 
 /* deoarece numerele sunt sterse din domeniu odata ce sunt folosite, solutia generata este garantata sa nu contina
@@ -9,12 +11,12 @@ bool check(vector<int> solution) {
 
 void printSolution(vector<int>& solution) {
     for (int s : solution) {
-        std::cout << s << " ";
+        cout << s << " ";
     }
-    std::cout << "\n";
+    cout << "\n";
 }
 
-void back(vector<int>& domain, std::vector<int>& solution) {
+void back(vector<int>& domain, vector<int>& solution) {
     /* dupa ce am folosit toate elementele din domeniu putem verifica daca
     am gasit o solutie */
     if (domain.size() == 0) {

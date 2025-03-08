@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>    // cout
+#include <stack>       // stack
+using namespace std;
 
 int main() {
-    std::stack<int> st;
+    stack<int> st;
     for (int i = 0; i < 5; ++i) {
         st.push(i);
     }
@@ -9,9 +11,9 @@ int main() {
     while (!st.empty()) {
         auto top = st.top(); // get the top element
         st.pop(); // remove the top element
-        std::cout << top << " "; // 4 3 2 1 0
+        cout << top << " "; // 4 3 2 1 0
     }
-    std::cout << "\n";
+    cout << "\n";
 
     return 0;
 }

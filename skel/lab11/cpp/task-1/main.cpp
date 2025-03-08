@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <fstream>
+#include <iostream>
+#include <utility>
+#include <vector>
 using namespace std;
 
 // numarul maxim de noduri

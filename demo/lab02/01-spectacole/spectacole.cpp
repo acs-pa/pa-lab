@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#include <algorithm>       // sort
+#include <iostream>        // cin, cout
+#include <limits>          // numeric_limits
+#include <utility>         // pair
+#include <vector>          // vector
 using namespace std;
 
 bool end_hour_comp(pair<int, int>& e1, pair<int, int>& e2) {
@@ -13,7 +17,7 @@ vector<pair<int, int>> plan(vector<pair<int, int>>& intervals) {
 
     // se ia ultimul spectacol ca terminat la -oo pt a putea incepe cu
     // cel mai devreme
-    int last_end = INT_MIN;
+    int last_end = numeric_limits<int>::min();
     for (auto interval : intervals) {
         // daca inceputul intervalului curent este dupa sfarsitul ultimului
         // spectacol (last_end) il adaugam in lista de spectacole la care

@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#include <algorithm>       // sort
+#include <iostream>        // cout
+#include <limits>          // numeric_limits
+#include <utility>         // pair
+#include <vector>          // vector
 using namespace std;
 
 bool point_in_interval(const pair<int, int>& interval, int point) {
@@ -13,7 +17,7 @@ bool right_edge_comparator(pair<int, int>& e1, pair<int, int>& e2) {
 vector<int> cover_intervals_greedy(vector<pair<int, int>>& intervals) {
     vector<int> nails; // pozitiile cuielor, a.k.a multimea M
     // ultimul punct inserat
-    int last_point = INT_MIN;
+    int last_point = numeric_limits<int>::min();
 
     // sortam invervalele dupa captul drepata
     sort(intervals.begin(), intervals.end(), right_edge_comparator);

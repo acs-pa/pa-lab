@@ -2,6 +2,7 @@
 
 make_helper() {
     make -C "$(dirname $1)" $2
+    make -C "$(dirname $1)" clean
 }
 
 for makefile_path in $(find tutorial/ -name Makefile); do
