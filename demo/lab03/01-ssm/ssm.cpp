@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>       // cin, cout
+#include <vector>         // vector
 using namespace std;
 
 void SSM(int n, vector<int>& v) {

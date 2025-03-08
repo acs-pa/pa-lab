@@ -26,8 +26,8 @@ C++ has multiple standards (see [cppreference/history](https://en.cppreference.c
 
 int main() {
     int x;
-    std::cin >> x;
-    std::cout << "Hello, Gigel! I got " << x << " from the PA team!"
+    cin >> x;
+    cout << "Hello, Gigel! I got " << x << " from the PA team!"
     return 0;
 }
 ```
@@ -36,9 +36,9 @@ Explanations:
 * `io`:
   * The standard C++ input/output library is `<iostream>`.
   * Streams:
-    * `std::cin`: reading from `STDIN` with operator `>>`
-    * `std::cout`: writing to `STDOUT` with operator `<<`
-    * `std::cerr`: writing to `STDERR` with operator `<<`
+    * `cin`: reading from `STDIN` with operator `>>`
+    * `cout`: writing to `STDOUT` with operator `<<`
+    * `cerr`: writing to `STDERR` with operator `<<`
   * Please check `io.md` for file operations.
 * `namespace`
   * >Namespaces provide a method for preventing name conflicts in large projects. ([cppreference/namespace](https://en.cppreference.com/w/cpp/language/namespace))
@@ -61,7 +61,7 @@ Notes for `PA-only`:
   * Compiler flags:
     * always use `-std=c++17`
     * never use optimizations flags (the purpose of this class is to find the solution with the best complexity)
-  * It's `encouraged` to use `using namespace std` ([stackoverflow/using-namespace-std](https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice)) instead of specifing `std::` everywhere. This tutorial we'll use the second approach.
+  * It's `encouraged` to use `using namespace std` ([stackoverflow/using-namespace-std](https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice)) instead of specifing `` everywhere. This tutorial we'll use the second approach.
   * Always use the provided skeleton for the laboratory.
 
 ---
@@ -105,7 +105,7 @@ struct Complex {
 
     void print() {
         // the im and re members for the current Complex object are accessed
-        std::cout << re << "+" << im << "i" << "\n";
+        cout << re << "+" << im << "i" << "\n";
     }
 };
 
@@ -138,7 +138,7 @@ class Gigel {
                  // if Gigel was struct, x was public.
 public:
     void show() {
-        std::cout << "x is " << x << "\n";
+        cout << "x is " << x << "\n";
     }
 };
 
@@ -167,11 +167,11 @@ A constructor is **a special method** that is **automatically** called `when` an
 class Gigel {
  public:
    Gigel() {
-      std::cout << "Gigel()\n";
+      cout << "Gigel()\n";
     }
 
    Gigel(int x) {
-      std::cout << "Gigel(" << x << ")\n";
+      cout << "Gigel(" << x << ")\n";
     }
 };
 
@@ -198,7 +198,7 @@ Note: The usage of malloc / free in C++ is considered unsafe and it's forbidden.
 
 During the PA labs you won't used dynamic allocation, because we want to keep the things as simple as possible:
 * a single call to `new / delete` will be made in the `main()` function - the skeleton already has the implementation for `main()`.
-* when solving the tasks you must use containers from STL (e.g. `std::vector`) which allocate and automatically deallocate memory.
+* when solving the tasks you must use containers from STL (e.g. `vector`) which allocate and automatically deallocate memory.
 
 ---
 
@@ -216,7 +216,7 @@ auto square(double x) {
 
 int main() {
    auto x = 10.0; // the type of x is automatically deduced to double because 10.0 it's a double
-   std::cout << square(x) << "\n";
+   cout << square(x) << "\n";
    return 0;
 }
 ```
@@ -245,7 +245,7 @@ void modify_cpp(int &x) {
 int main() {
    int x = 0;
    modify_cpp(x);
-   std::cout << x << "\n"; // print 123 because x was changed to 123 in modify_cpp()
+   cout << x << "\n"; // print 123 because x was changed to 123 in modify_cpp()
    return 0;
 }
 ```
@@ -303,15 +303,15 @@ T my_max (T a, T b) {
 
 int main() {
     //  usage example for T = int
-    std::cout << my_max<int>(2, 3) << "\n";
+    cout << my_max<int>(2, 3) << "\n";
     // or let to compile to automatically determine the T type from the passed values
-    std::cout << my_max(2, 3) << "\n";
+    cout << my_max(2, 3) << "\n";
 
     // usage example for T = double
-    std::cout << my_max(3.4, 5.6) << "\n";
+    cout << my_max(3.4, 5.6) << "\n";
 
     // usage example for T = char
-    std::cout << my_max('a', 'b') << "\n";
+    cout << my_max('a', 'b') << "\n";
     return 0;
 }
 ```
@@ -348,12 +348,12 @@ private:
 // usage example for int
 MyClass<int> mc_int;
 mc_int.set_member(123); // set an int value
-std::cout << mc_int.get_member() << "\n"; // print 123
+cout << mc_int.get_member() << "\n"; // print 123
 
 // usage example for class Gigel
 MyClass<Gigel> mc_gigel;
 mc_gigel.set_member(Gigel()); // set a Gigel value
-std::cout << mc_gigel.get_member() << "\n"; // print the Gigel value
+cout << mc_gigel.get_member() << "\n"; // print the Gigel value
 ```
 
 ## STL

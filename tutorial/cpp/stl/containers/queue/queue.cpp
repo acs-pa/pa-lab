@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>     // cout
+#include <queue>        // queue
+using namespace std;
 
 int main() {
-    std::queue<int> q;
+    queue<int> q;
     for (int i = 0; i < 5; ++i) {
         q.push(i);
     }
@@ -9,8 +11,8 @@ int main() {
     while (!q.empty()) {
         auto front = q.front();
         q.pop();
-        std::cout << front << " "; // 0 1 2 3 4
+        cout << front << " "; // 0 1 2 3 4
     }
-    std::cout << "\n";
+    cout << "\n";
     return 0;
 }

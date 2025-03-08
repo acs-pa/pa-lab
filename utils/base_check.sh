@@ -47,11 +47,11 @@ check_prerequisites() {
 }
 
 check_prerequisites_cpp() {
-  check_prerequisites python g++
+  check_prerequisites python3 g++
 }
 
 check_prerequisites_java() {
-  check_prerequisites python java javac
+  check_prerequisites python3 java javac
 }
 
 show_help() {

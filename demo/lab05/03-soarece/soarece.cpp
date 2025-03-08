@@ -1,4 +1,7 @@
-#include <bits/stdc++.h>
+#include <iostream>         // cin, cout
+#include <fstream>          // ifstream
+#include <utility>          // pair
+#include <vector>           // vector
 using namespace std;
 
 bool check(vector<pair<int, int>>& solution) {
@@ -12,7 +15,7 @@ void printSolution(vector<pair<int, int>>& solution) {
     cout << "\n";
 }
 
-void back(int step, int stop, int walls[100][100], vector<std::pair<int, int>>& solution, int line_moves[2],
+void back(int step, int stop, int walls[100][100], vector<pair<int, int>>& solution, int line_moves[2],
     int col_moves[2]) {
     /* ne oprim dupa ce am ajuns la pasul "stop" si verificam daca solutia este
     corecta */
@@ -53,7 +56,7 @@ void back(int step, int stop, int walls[100][100], vector<std::pair<int, int>>& 
         if (new_line < n && new_col < n && walls[new_line][new_col] == 0) {
             /* adaugam noua celula in solutia candidat;
             NOTE: {new_line, new_col} este echivalent cu
-            std::pair<int, int>(new_line, new_col) si se numeste "initializer
+            pair<int, int>(new_line, new_col) si se numeste "initializer
             list", feature in C++11 */
             solution.push_back({new_line, new_col});
 
@@ -75,7 +78,7 @@ int main(int argc, char* argv[]) {
     int n, i, j, walls[100][100], line_moves[2] = {0, 1}, col_moves[2] = {1, 0};
     ifstream fin(argv[1]);
     /* initializam solutia ca vector de perechi de int-uri */
-    std::vector<std::pair<int, int>> solution;
+    vector<pair<int, int>> solution;
 
     fin >> n;
     for (i = 0; i < n; ++i) {

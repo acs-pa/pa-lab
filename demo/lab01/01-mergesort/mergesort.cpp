@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>         // cout
+#include <random>           // random_device
+#include <vector>           // vector
 using namespace std;
 
 vector<int> v;

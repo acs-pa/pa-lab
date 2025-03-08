@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>     // cout
+#include <unordered_set> // unordered_set
+using namespace std;
 
 int main() {
-    std::unordered_set<int> s;
+    unordered_set<int> s;
 
     // insert element in an unordered_set
     for (int i = 0; i < 5; ++i) {
@@ -16,9 +18,9 @@ int main() {
 
     // iterate an unordered_set
     for (const auto& elem : s) {
-        std::cout << elem << " ";
+        cout << elem << " ";
     }
-    std::cout << "\n";
+    cout << "\n";
 
     return 0;
 }

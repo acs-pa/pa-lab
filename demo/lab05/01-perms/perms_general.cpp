@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <cstdlib>          // atoi
+#include <iostream>         // cin, cout
+#include <vector>           // vector
 using namespace std;
 
 /* deoarece numerele sunt sterse din domeniu odata ce sunt folosite, solutia
@@ -37,7 +39,7 @@ void back(vector<int> domain, vector<int> solution) {
     for (unsigned int i = 0; i < domain.size(); ++i) {
         /* cream o solutie noua si un domeniu nou care sunt identice cu cele
         de la pasul curent */
-        std::vector<int> newSolution(solution), newDomain(domain);
+        vector<int> newSolution(solution), newDomain(domain);
 
         /* adaugam in noua solutie elementul ales din domeniu */
         newSolution.push_back(domain[i]);

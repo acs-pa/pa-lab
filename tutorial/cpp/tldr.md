@@ -6,7 +6,8 @@ During the PA laboratories, you'll receive a skeleton for each task.
 NOTE: `should` on this page it's considered to be something like tips & tricks for PA (it may not be applicable in other contexts).
 
 ```cpp
-#include <bits/stdc++.h>
+#include <iostream>      // cin, cout
+#include <fstream>       // ifstream, ofstream
 using namespace std;
 
 class Task {
@@ -44,9 +45,9 @@ int main() {
     // * se apeleaza metoda solve()
     // (citire, rezolvare, printare)
     // * se distruge obiectul si se elibereaza memoria
-    auto* task = new (std::nothrow) Task(); // hint: cppreference/nothrow
+    auto* task = new (nothrow) Task(); // hint: cppreference/nothrow
     if (!task) {
-        std::cerr << "new failed: WTF are you doing? Throw your PC!\n";
+        cerr << "new failed: WTF are you doing? Throw your PC!\n";
         return -1;
     }
     task->solve();
@@ -56,7 +57,7 @@ int main() {
 ```
 
 Notes:
-* You `don't` need to include other libraries. `<bits/stdc++.h>` includes everything!
+* You need to include other libraries.
 * You `don't` need to ever change the `main()` function!
 * You `need` to complete the implementation for the `Task` class.
   * The reading/writing must be done with `<fstream>` for performance reasonse.
@@ -89,7 +90,7 @@ fin >> x >> y; // read integers x and y from file
 
 int x;
 char c;
-std::string s;
+string s;
 fin >> x >> c >> s; // read integer x, char c and string s from file
 ```
 
@@ -103,18 +104,18 @@ fout << x << " " << y << "\n"; // write a line: x, space, y, newline
 
 int x;
 char c;
-std::string s;
+string s;
 fout << x " " << c << " " << s << "\n"; // write a line: x, space, y, space, s, newline
 ```
 
 ### arrays
-You should always use `std::vector<T>`.
+You should always use `vector<T>`.
 
 ```cpp
 // unitialized vector:
 // * use this when you don't know the size
 // * use push_back and pop_back to insert/remove elements
-std::vector<int> v;
+vector<int> v;
 // read example
 for (int i = 0; i < n; ++i) {
     int x;
@@ -123,14 +124,14 @@ for (int i = 0; i < n; ++i) {
 }
 
 // vector with n zeros (0-indexed)
-std::vector<int> v(n, 0); // use: v[0], v[1], ... , v[n - 1]
+vector<int> v(n, 0); // use: v[0], v[1], ... , v[n - 1]
 // read example
 for (int i = 0; i < n; ++i) {
     fin >> v[i];
 }
 
 // vector with n zeros (1-indexed)
-std::vector<int> v(n + 1, 0); // use: v[1], v[2], ..., v[n] - e.g. for dynamic programming
+vector<int> v(n + 1, 0); // use: v[1], v[2], ..., v[n] - e.g. for dynamic programming
 // note: v[0] it's allocated, but not used
 // read example:
 for (int i = 1; i <= n; ++i) {
@@ -139,12 +140,12 @@ for (int i = 1; i <= n; ++i) {
 ```
 
 ### matrix
-You should always use `std::vector<std::vector<T>>`.
+You should always use `vector<vector<T>>`.
 
 ```cpp
 // most common usage at PA it's 1-indexed matrix for DP
 // n x m matrix filled with zeros
-std::vector<std::vector<int>> dp(n + 1, std::vector<int>(m + 1, 0));
+vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
 // use:
 // dp[1][1], dp[1][2], ..., dp[1][m]
 // ...
@@ -159,10 +160,10 @@ for (int i = 1; i <= n; ++i) {
 ```
 
 ### stack
-You should always use `std::stack<T>`.
+You should always use `stack<T>`.
 
 ```cpp
-std::stack<int> st;
+stack<int> st;
 st.push(1);
 st.push(2);
 st.push(3);
@@ -170,16 +171,16 @@ st.push(3);
 while (!st.empty()) {
     auto top = st.top();
     st.pop();
-    std::cout << top << "\n";
+    cout << top << "\n";
 }
 // print: 3 2 1
 ```
 
 ### queue
-You should always use `std::queue<T>`.
+You should always use `queue<T>`.
 
 ```cpp
-std::queue<int> q;
+queue<int> q;
 q.push(1);
 q.push(2);
 q.push(3);
@@ -187,16 +188,16 @@ q.push(3);
 while (!st.empty()) {
     auto top = st.top();
     st.pop();
-    std::cout << top << "\n";
+    cout << top << "\n";
 }
 // print: 1 2 3
 ```
 
 ### hashtable
-You should always use `std::unordered_map<K, V>`.
+You should always use `unordered_map<K, V>`.
 
 ```cpp
-std::unordered_map<std::string, int> frequency;
+unordered_map<string, int> frequency;
 frequency["gigel"]++;
 frequency["gigel"]++;
 frequency["gigel"]++;
@@ -205,13 +206,13 @@ frequency["gigel"]++;
 frequency["not_gigel"]++;
 
 for (auto& [name, count] : frequency) {
-    std::cout << name << " " << count << "\n";
+    cout << name << " " << count << "\n";
 }
 // possible output (because it's unordered):
 // not_gigel 1
 // gigel 5
 //
-// if using `std::map` the output is guaranteed to be (sorted keys):
+// if using `map` the output is guaranteed to be (sorted keys):
 // gigel 5
 // not_gigel 1
 ```
@@ -219,14 +220,14 @@ for (auto& [name, count] : frequency) {
 ### set
 
 #### ordered set
-You should always use `std::set<T>` (ascending element order) or `std::set<T, std::greater<T>>` (descending element ordere).
+You should always use `set<T>` (ascending element order) or `set<T, greater<T>>` (descending element ordere).
 
 #### unordered set
-You should always use `std::unordered_set<T>`.
+You should always use `unordered_set<T>`.
 
 #### example
 ```cpp
-std::set<int> s;
+set<int> s;
 s.insert(1);
 s.insert(12);
 s.insert(12);
@@ -235,16 +236,16 @@ s.insert(6);
 s.insert(1);
 
 for (auto x : s) {
-    std::cout << s << "\n";
+    cout << s << "\n";
 }
 // print: 1 6 12
 ```
 
 ### minheap
-You should always use `std::multiset<T>`.
+You should always use `multiset<T>`.
 
 ```cpp
-std::multiset<int> minheap;
+multiset<int> minheap;
 minheap.insert(1);
 minheap.insert(12);
 minheap.insert(6);
@@ -253,16 +254,16 @@ minheap.insert(1);
 while (!minheap.empty()) {
     auto top = *minheap.begin();
     minheap.erase(minheap.begin());
-    std::cout << top << "\n";
+    cout << top << "\n";
 }
 // print: 1 1 6 12
 ```
 
 ### maxheap
-You should always use `std::multiset<T, std::greater<T>>`.
+You should always use `multiset<T, greater<T>>`.
 
 ```cpp
-std::multiset<int, std::greater<int>> maxheap;
+multiset<int, greater<int>> maxheap;
     maxheap.insert(1);
     maxheap.insert(12);
     maxheap.insert(6);
@@ -271,7 +272,7 @@ std::multiset<int, std::greater<int>> maxheap;
     while (!maxheap.empty()) {
         auto top = *maxheap.begin();
         maxheap.erase(maxheap.begin());
-        std::cout << top << "\n";
+        cout << top << "\n";
     }
 // print: 12 6 1 1
 ```

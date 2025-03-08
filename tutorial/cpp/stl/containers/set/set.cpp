@@ -1,7 +1,9 @@
-#include <bits/stdc++.h>
+#include <iostream>     // cout
+#include <set>          // set
+using namespace std;
 
 int main() {
-    std::set<int> s;
+    set<int> s;
 
     // insert element in set
     for (int i = 0; i < 5; ++i) {
@@ -16,9 +18,9 @@ int main() {
 
     // iterate a set
     for (const auto& elem : s) {
-        std::cout << elem << " ";
+        cout << elem << " ";
     }
-    std::cout << "\n";
+    cout << "\n";
 
     return 0;
 }

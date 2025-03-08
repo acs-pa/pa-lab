@@ -1,4 +1,5 @@
-#include <bits/stdc++.h>
+#include <iostream>         // cin, cout
+#include <vector>           // vector
 using namespace std;
 
 // v   = vectorul dat

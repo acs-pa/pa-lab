@@ -1,6 +1,9 @@
 #pragma once
 
-#include <bits/stdc++.h>
+#include <queue>
+#include <set>
+#include <utility>
+#include <vector>
 using namespace std;
 
 // numarul maxim de noduri
