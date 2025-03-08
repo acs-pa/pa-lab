@@ -36,3 +36,8 @@
 *.project
 
 *.zip
+
+utils/templates/
+utils/repo_diff.sh
+utils/skel_export.sh
+utils/skel_init.sh
