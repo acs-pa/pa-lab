@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-import sys
+# SPDX-License-Identifier: BSD-3-Clause
 
+import sys
 
 def check(n, sol):
     ok = True
