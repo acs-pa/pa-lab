@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### unordered_map
 * [cppreference.com/unordered_map](https://en.cppreference.com/w/cpp/container/unordered_map)
 *  associative container that contains **key-value** pairs with **unique keys**. (a.k.a `unordered keys`)

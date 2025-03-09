@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### unordered_set
 * [cppreference.com/unordered_set](https://en.cppreference.com/w/cpp/container/unordered_set)
 * an associative container that contains a set of unique objects. (a.k.a. `unsorted set`)

@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### queue
 
 * [cppreference.com/queue](https://en.cppreference.com/w/cpp/container/queue)

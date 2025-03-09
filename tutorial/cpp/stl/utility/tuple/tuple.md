@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### tuple
 * [cppreference/tuple](https://en.cppreference.com/w/cpp/utility/tuple)
 

@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### vector
 * [cppreference/vector](https://en.cppreference.com/w/cpp/container/vector)
 
