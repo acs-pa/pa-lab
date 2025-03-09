@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <fstream>
 #include <iostream>
 #include <vector>

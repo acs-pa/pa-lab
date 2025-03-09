@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 import java.io.BufferedWriter;
 import java.io.BufferedReader;
 import java.io.FileReader;
