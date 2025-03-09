@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
