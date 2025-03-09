@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# SPDX-License-Identifier: BSD-3-Clause
 
 NUM_TASKS=2
 TASKS=(task-1 task-2)
