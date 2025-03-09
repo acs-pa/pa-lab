@@ -39,7 +39,6 @@ Explanations:
     * `cin`: reading from `STDIN` with operator `>>`
     * `cout`: writing to `STDOUT` with operator `<<`
     * `cerr`: writing to `STDERR` with operator `<<`
-  * Please check `io.md` for file operations.
 * `namespace`
   * >Namespaces provide a method for preventing name conflicts in large projects. ([cppreference/namespace](https://en.cppreference.com/w/cpp/language/namespace))
   * A namespace groups variables, types and functions together.
