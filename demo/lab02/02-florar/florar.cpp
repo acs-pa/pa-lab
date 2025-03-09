@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <algorithm>   // sort
 #include <iostream>    // cout
 #include <vector>      // vector
