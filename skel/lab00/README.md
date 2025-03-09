@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 # lab00
 
 * Setup tutorial: [PA setup](../../tutorial/setup.md).

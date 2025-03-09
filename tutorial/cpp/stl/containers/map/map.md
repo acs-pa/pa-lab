@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### map
 * [cppreference.com/map](https://en.cppreference.com/w/cpp/container/map)
 * **sorted** associative container that contains **key-value pairs** with **unique keys**. (a.k.a `ordered keys`)

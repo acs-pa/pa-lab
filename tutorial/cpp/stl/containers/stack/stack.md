@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### stack
 * [cppreference.com/stack](https://en.cppreference.com/w/cpp/container/stack)
 * A generic stack implementation.

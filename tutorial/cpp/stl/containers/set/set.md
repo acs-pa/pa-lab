@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 ### set
 * [cppreference.com/set](https://en.cppreference.com/w/cpp/container/set)
 * an associative container that contains a **sorted** set of unique objects. (a.k.a `sorted set`)

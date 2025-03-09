@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+
 # Java Collections
 
 **Java Collections** is a framework that provides implementation for various data structures and algorithms for storing and manipulating groups of objects. It provides Interfaces and Classes through the `java.util` package.
