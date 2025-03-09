@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
 #include <iostream>     // cout
 #include <map>          // map
 #include <string>       // string
