@@ -8,6 +8,7 @@ Aici vor fi publicate materialele pentru laboratoarele de la Proiectarea Algorit
 * `tutorial/`: diverse tutoriale
 * `demos/labxy/`: demo pentru `labxy`
 * `skel/labxy/`: skel pentru `labxy`
+* `sol/labxy/`: soluții posibile pentru `labxy`
 * `utils/`: scripturi de uz intern pentru echipa de PA
 
 ## Maintainers:
