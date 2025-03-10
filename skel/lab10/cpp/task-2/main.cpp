@@ -58,10 +58,10 @@ private:
         vector<vector<int>> d(n + 1, vector<int>(n + 1, 0)); // initial toate distantele sunt 0
         vector<vector<int>> p(n + 1, vector<int>(n + 1, 0)); // initial toti parintii sunt 0
 
-        return {false, d,  p};
+        return {false, d, p};
     }
 
-    void print_output(const JohnsonResult &res) {
+    void print_output(const JohnsonResult& res) {
         ofstream fout("out");
         if (res.has_cycle) {
             fout << "Ciclu negativ!\n";

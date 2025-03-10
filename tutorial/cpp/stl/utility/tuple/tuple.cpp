@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <string>       // string
-#include <utility>      // tuple
+#include <iostream> // cout
+#include <string> // string
+#include <utility> // tuple
 using namespace std;
 
 int main() {

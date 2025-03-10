@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>       // cin, cout
-#include <vector>         // vector
+#include <iostream> // cin, cout
+#include <vector> // vector
 using namespace std;
 
 void SSM(int n, vector<int>& v) {

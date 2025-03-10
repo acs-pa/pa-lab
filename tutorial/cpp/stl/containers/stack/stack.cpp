@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>    // cout
-#include <stack>       // stack
+#include <iostream> // cout
+#include <stack> // stack
 using namespace std;
 
 int main() {

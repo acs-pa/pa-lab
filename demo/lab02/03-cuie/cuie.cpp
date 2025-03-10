@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <algorithm>       // sort
-#include <iostream>        // cout
-#include <limits>          // numeric_limits
-#include <utility>         // pair
-#include <vector>          // vector
+#include <algorithm> // sort
+#include <iostream> // cout
+#include <limits> // numeric_limits
+#include <utility> // pair
+#include <vector> // vector
 using namespace std;
 
 bool point_in_interval(const pair<int, int>& interval, int point) {

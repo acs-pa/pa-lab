@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
+#include <iostream> // cout
 #include <unordered_set> // unordered_set
 using namespace std;
 

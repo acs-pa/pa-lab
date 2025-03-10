@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <map>          // map
-#include <string>       // string
+#include <iostream> // cout
+#include <map> // map
+#include <string> // string
 using namespace std;
 
 int main() {
@@ -40,6 +40,6 @@ int main() {
     for (const auto& [key, value] : grades) {
         cout << key << " " << value << "\n";
     }
-    
+
     return 0;
 }

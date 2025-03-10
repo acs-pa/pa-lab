@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>         // cin, cout
-#include <fstream>          // ifstream, ofstream
-#include <vector>           // vector
+#include <iostream> // cin, cout
+#include <fstream> // ifstream, ofstream
+#include <vector> // vector
 using namespace std;
 
 class Task {

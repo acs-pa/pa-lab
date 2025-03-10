@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <cstdlib>          // atoi
-#include <iostream>         // cin, cout
-#include <vector>           // vector
+#include <cstdlib> // atoi
+#include <iostream> // cin, cout
+#include <vector> // vector
 using namespace std;
 
 bool check(vector<int>& solution) {
