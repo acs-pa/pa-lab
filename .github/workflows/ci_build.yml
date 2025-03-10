@@ -1,0 +1,26 @@
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: CI build (demos, skeletons, tutorials)
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build demos
+        run: utils/build_demos.sh
+
+      - name: Build skeletons
+        run: utils/build_skeletons.sh
+
+      - name: Build tutorials
+        run: utils/build_tutorials.sh
