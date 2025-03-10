@@ -59,7 +59,7 @@ private:
             return;
         }
 
-        for (auto &node : result) {
+        for (auto& node : result) {
             fout << node << " ";
         }
         fout << "\n";

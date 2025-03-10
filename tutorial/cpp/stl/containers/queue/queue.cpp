@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <queue>        // queue
+#include <iostream> // cout
+#include <queue> // queue
 using namespace std;
 
 int main() {

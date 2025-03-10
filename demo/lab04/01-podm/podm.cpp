@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <algorithm>        // min
-#include <iostream>         // cin, cout
-#include <limits>           // numeric_limits
-#include <vector>           // vector
+#include <algorithm> // min
+#include <iostream> // cin, cout
+#include <limits> // numeric_limits
+#include <vector> // vector
 using namespace std;
 
 // kInf este valoarea maxima - "infinitul" nostru

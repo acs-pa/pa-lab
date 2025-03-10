@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <algorithm>       // sort
-#include <iostream>        // cin, cout
-#include <limits>          // numeric_limits
-#include <utility>         // pair
-#include <vector>          // vector
+#include <algorithm> // sort
+#include <iostream> // cin, cout
+#include <limits> // numeric_limits
+#include <utility> // pair
+#include <vector> // vector
 using namespace std;
 
 bool end_hour_comp(pair<int, int>& e1, pair<int, int>& e2) {

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <cstring>          // memcpy
-#include <iostream>         // cin, cout
-#include <vector>           // vector
+#include <cstring> // memcpy
+#include <iostream> // cin, cout
+#include <vector> // vector
 using namespace std;
 
 #define MOD 1009

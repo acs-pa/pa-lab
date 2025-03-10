@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>         // cin, cout
-#include <fstream>          // ifstream
-#include <utility>          // pair
-#include <vector>           // vector
+#include <iostream> // cin, cout
+#include <fstream> // ifstream
+#include <utility> // pair
+#include <vector> // vector
 using namespace std;
 
 bool check(vector<pair<int, int>>& solution) {

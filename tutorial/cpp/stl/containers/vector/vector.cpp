@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <vector>       // vector   
+#include <iostream> // cout
+#include <vector> // vector
 using namespace std;
 
 int main() {

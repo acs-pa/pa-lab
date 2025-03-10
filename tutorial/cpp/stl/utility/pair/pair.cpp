@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <string>       // string
-#include <utility>      // pair
+#include <iostream> // cout
+#include <string> // string
+#include <utility> // pair
 using namespace std;
 
 int main() {

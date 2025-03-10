@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>     // cout
-#include <set>          // set
+#include <iostream> // cout
+#include <set> // set
 using namespace std;
 
 int main() {

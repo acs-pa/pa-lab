@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: BSD-3-Clause
 
-#include <iostream>         // cin, cout
-#include <fstream>          // ifstream
-#include <utility>          // pair
-#include <vector>           // vector
+#include <iostream> // cin, cout
+#include <fstream> // ifstream
+#include <utility> // pair
+#include <vector> // vector
 using namespace std;
 
 bool check(vector<pair<int, int>>& solution, int walls[100][100]) {
@@ -35,8 +35,8 @@ void printSolution(vector<pair<int, int>>& solution) {
     cout << "\n";
 }
 
-void back(
-    vector<pair<int, int>>& domain, int walls[100][100], vector<pair<int, int>>& solution, unsigned int max_iter) {
+void back(vector<pair<int, int>>& domain, int walls[100][100], vector<pair<int, int>>& solution,
+    unsigned int max_iter) {
     /* daca am facut "max_iter" pasi ma opresc si verific daca este corecta
     solutia */
     if (solution.size() == max_iter) {
