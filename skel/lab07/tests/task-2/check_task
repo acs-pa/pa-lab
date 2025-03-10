@@ -3,6 +3,7 @@
 
 import sys
 
+
 def check(n, edges, sol):
     node_to_position = {}
     for i in range(len(sol)):
