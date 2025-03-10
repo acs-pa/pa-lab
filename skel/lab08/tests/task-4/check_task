@@ -3,6 +3,7 @@
 
 import sys
 
+
 def main():
     [_, file_in, file_ref, file_out] = sys.argv
 

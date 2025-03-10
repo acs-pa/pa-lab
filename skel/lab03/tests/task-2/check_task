@@ -3,6 +3,7 @@
 
 import sys
 
+
 def check(n, v, sol_len, sol):
     i = 0
     j = 0

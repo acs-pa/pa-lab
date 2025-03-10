@@ -4,6 +4,7 @@
 from enum import Flag
 import sys
 
+
 def check(n, edges, cost_ref, edges_out):
     new_edges_out = []
     for x, y in edges_out:
@@ -30,7 +31,7 @@ def check(n, edges, cost_ref, edges_out):
     for x, y in edges_out:
         if not (x, y) in adj:
             return False, 'Muchia invalida ({}, {}) in MST.'.format(x, y)
-        cost += adj[ (x, y) ]
+        cost += adj[(x, y)]
 
     if cost_ref != cost:
         return False, 'Muchiile date formeaza un arbore cu cost gresit: {} vs {}'.format(cost_ref, cost)
@@ -54,23 +55,27 @@ def check(n, edges, cost_ref, edges_out):
 
     return True, ''
 
+
 def main():
     [_, file_in, file_ref, file_out] = sys.argv
 
     with open(file_in) as f:
         [n, m] = [int(x) for x in next(f).split()]
-        edges = [(int(line.split()[0]), int(line.split()[1]), int(line.split()[2])) for line in f]
-        assert(m == len(edges))
+        edges = [(int(line.split()[0]), int(line.split()[1]),
+                  int(line.split()[2])) for line in f]
+        assert (m == len(edges))
 
     with open(file_ref) as f:
         [cost_ref] = [int(x) for x in next(f).split()]
 
     with open(file_out) as f:
         [cost_out] = [int(x) for x in next(f).split()]
-        edges_out = [(int(line.split()[0]), int(line.split()[1])) for line in f]
+        edges_out = [(int(line.split()[0]), int(line.split()[1]))
+                     for line in f]
 
     if cost_ref != cost_out:
-        sys.stdout.write('\nCerinta 1.1 gresita: cost {} vs {}\t'.format(cost_ref, cost_out))
+        sys.stdout.write(
+            '\nCerinta 1.1 gresita: cost {} vs {}\t'.format(cost_ref, cost_out))
         sys.exit(1)
 
     sys.stdout.write('\nCerinta 1.1 rezolvata!\t')
@@ -80,9 +85,9 @@ def main():
         sys.stdout.write('\nCerinta 1.2 gresita: {}\t'.format(err))
         sys.exit(1)
 
-
     sys.stdout.write('\nCerinta 1.2 rezolvata!\t')
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
