@@ -12,3 +12,9 @@ find . -name "*.py" -or -name "check_task" | xargs autopep8 -i
 
 # Lint Shell.
 # TODO
+
+# Lint Markdown.
+# TODO
+
+# Lint YAML.
+# TODO
