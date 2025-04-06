@@ -13,6 +13,16 @@ error() {
 declare -a solutions=(
     "lab01,cpp"
     "lab01,java"
+    "lab02,cpp"
+    "lab02,java"
+    "lab03,cpp"
+    "lab03,java"
+    "lab04,cpp"
+    "lab04,java"
+    "lab05,cpp"
+    "lab05,java",
+    "lab06,cpp",
+    "lab06,java"
 )
 
 for solution in "${solutions[@]}"; do

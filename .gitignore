@@ -34,8 +34,11 @@
 *.class
 *bin*
 *.project
-
+**/out
+**/in
 *.zip
+**.DS_Store
+
 
 utils/templates/
 utils/repo_diff.sh
