@@ -20,7 +20,12 @@ copy_sol() {
     SKEL_PATH=$(echo "${1}" | sed 's|sol/|skel/|1')
     EXPORT_PATH="${2}"
 
+    if [[ ! -f "${EXPORT_PATH}/${SKEL_PATH}" ]]; then
+        # Task doesn't have a skel, we need to create intermediary paths
+        mkdir -p "${EXPORT_PATH}"/"$(dirname "${SKEL_PATH}")"
+    fi
     cp "${SOL_FILE}" "${EXPORT_PATH}/${SKEL_PATH}" 2>&1 1>/dev/null
+
 }
 
 export -f copy_sol

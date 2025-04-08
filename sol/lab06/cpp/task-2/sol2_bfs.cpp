@@ -48,9 +48,10 @@ private:
         // ATENTIE: nodurile sunt indexate de la 1 la n.
         // *******
 
-        return solve_bfs(); // BFS: O(n + m);
+        return solve_bfs();
     }
 
+    // Complexitate: O(n + m)
     vector<int> solve_bfs() {
         // Step 0: initializare topsort - permutare vida initial
         vector<int> topsort;

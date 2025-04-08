@@ -34,7 +34,8 @@ private:
         ifstream fin("in");
         fin >> n >> m >> source;
         for (int i = 1, x, y; i <= m; i++) {
-            fin >> x >> y; // muchie (x, y)
+            // muchie (x, y)
+            fin >> x >> y;
             adj[x].push_back(y);
             adj[y].push_back(x);
         }
@@ -53,6 +54,7 @@ private:
         return bfs(source);
     }
 
+    // Complexitate: O(n + m)
     vector<int> bfs(int source) {
         // Step 0: alocare vector de distante
         // d[node] = INF, oricare ar fi node
@@ -76,6 +78,7 @@ private:
                 // actulizam distanta lui x fata de sursa daca
                 // am gasit o solutie mai buna
                 if (d[node] + 1 < d[neigh]) {
+                    // adauga nodul in coada si actualizeaza distanta pana la el
                     d[neigh] = d[node] + 1;
                     q.push(neigh);
                 }

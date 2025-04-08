@@ -75,20 +75,21 @@ public class sol1_dfs {
             // ATENTIE: nodurile sunt indexate de la 1 la n.
             // *******
 
-            return solveDfs(); // DFS: O(n + m)
+            return solveDfs();
         }
 
+        // Complexitate: O(n + m)
         private ArrayList<Integer> solveDfs() {
             // vectorul rezultat (in final contine o permutare pentru 1, 2, ... n)
             ArrayList<Integer> topsort = new ArrayList<>();
 
-            boolean[] used = new boolean[n + 1];
+            boolean[] visited = new boolean[n + 1];
 
             // pentru fiecare nod
             for (int node = 1; node <= n; node++) {
                 // daca nodul nu a fost vizitat, pornim o parcurgere DFS
-                if (!used[node]) {
-                    dfs(node, used, topsort);
+                if (!visited[node]) {
+                    dfs(node, visited, topsort);
                 }
             }
 
@@ -99,13 +100,13 @@ public class sol1_dfs {
         }
 
         // porneste o parcurgere DFS din node
-        // foloseste vectorul used pentru a marca nodurile vizitate
-        void dfs(int node, boolean[] used, ArrayList<Integer> topsort) {
-            used[node] = true;
+        // foloseste vectorul visited pentru a marca nodurile vizitate
+        void dfs(int node, boolean[] visited, ArrayList<Integer> topsort) {
+            visited[node] = true;
 
             for (Integer neigh : adj[node]) {
-                if (!used[neigh]) {
-                    dfs(neigh, used, topsort);
+                if (!visited[neigh]) {
+                    dfs(neigh, visited, topsort);
                 }
             }
 

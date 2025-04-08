@@ -249,14 +249,26 @@ run_task_tests() {
     exit 1
   fi
 
-  num=1
-  while [[ $num -le ${NUM_TESTS[$task_num]} ]]; do
-    run_single_test "$lang" "$task" "$num"
-    if [[ $? -ne 0 ]]; then
-      failed=$(($failed + 1))
+  if [[ ${NUM_TESTS[$task_num]} -eq 0 ]]; then
+    echo "No tests are available for $task"
+    if [[ -e "${lang}/${task}" ]]; then
+      echo "Testing solution for $task"
+      compile_${lang} "${lang}/${task}"
+      if [[ $? -ne 0 ]]; then
+        echo "COMPILATION ERROR"
+        exit 1
+      fi
     fi
-    num=$(($num + 1))
-  done
+  else
+    num=1
+    while [[ $num -le ${NUM_TESTS[$task_num]} ]]; do
+      run_single_test "$lang" "$task" "$num"
+      if [[ $? -ne 0 ]]; then
+        failed=$(($failed + 1))
+      fi
+      num=$(($num + 1))
+    done
+  fi
 
   if [[ $failed -eq 0 ]]; then
     echo "Problema $task completa."
