@@ -85,9 +85,10 @@ public class sol2_bfs {
             // ATENTIE: nodurile sunt indexate de la 1 la n.
             // *******
 
-            return solve_bfs(); // BFS: O(n + m)
+            return solve_bfs();
         }
 
+        // Complexitate: O(n + m)
         private ArrayList<Integer> solve_bfs() {
             // Declaram o coada ce va contine toate nodurile care nu mai au dependente
             // si pe care le putem adauga apoi in topsort.

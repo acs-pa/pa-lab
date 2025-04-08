@@ -40,21 +40,22 @@ private:
         // ATENTIE: nodurile sunt indexate de la 1 la n.
         // *******
 
-        return solve_dfs(); // DFS: O(n + m);
+        return solve_dfs();
     }
 
+    // Complexitate: O(n + m)
     vector<int> solve_dfs() {
         // vectorul rezultat (in final contine o permutare pentru 1, 2, ..., n)
         vector<int> topsort;
 
-        // used[node] = 1 daca node a fost deja vizitat, 0 altfel
-        vector<int> used(n + 1, 0);
+        // visited[node] = 1 daca node a fost deja vizitat, 0 altfel
+        vector<int> visited(n + 1, 0);
 
         // pentru fiecare nod
         for (int node = 1; node <= n; ++node) {
             // daca nodul este nevizitat, pornim o parcurgere
-            if (!used[node]) {
-                dfs(node, used, topsort);
+            if (!visited[node]) {
+                dfs(node, visited, topsort);
             }
         }
 
@@ -65,14 +66,14 @@ private:
     }
 
     // porneste o parcurgere DFS din node
-    // foloseste vectorul used pentru a marca nodurile vizitate
-    void dfs(int node, vector<int>& used, vector<int>& topsort) {
-        used[node] = 1; // marcheze nodul ca fiind vizitat
+    // foloseste vectorul visited pentru a marca nodurile vizitate
+    void dfs(int node, vector<int>& visited, vector<int>& topsort) {
+        visited[node] = 1; // marcheze nodul ca fiind vizitat
 
         // parcurg vecinii
         for (auto& neigh : adj[node]) {
-            if (!used[neigh]) {
-                dfs(neigh, used, topsort);
+            if (!visited[neigh]) {
+                dfs(neigh, visited, topsort);
             }
         }
 
