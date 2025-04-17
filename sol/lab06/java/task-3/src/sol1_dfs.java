@@ -39,8 +39,8 @@ public class sol1_dfs {
         @SuppressWarnings("unchecked")
         ArrayList<Pair<Integer, Integer>> adj[] = new ArrayList[NMAX];
 
-        // Stocare noduri care nu au gradul intern 0
-        boolean[] not_start;
+        // Gradul intern al nodurilor.
+        int[] in_degree;
 
         public void solve() {
             readInput();
@@ -52,7 +52,7 @@ public class sol1_dfs {
             n = sc.nextInt();
             m = sc.nextInt();
 
-            not_start = new boolean[n + 1];
+            in_degree = new int[n + 1];
             
             for (int node = 1; node <= n; node++) {
                 adj[node] = new ArrayList<>();
@@ -65,7 +65,7 @@ public class sol1_dfs {
                 p = sc.nextInt();
 
                 adj[x].add(new Pair<Integer,Integer>(y, p));
-                not_start[y] = true;
+                in_degree[y]++;
             }
         }
 
@@ -86,7 +86,8 @@ public class sol1_dfs {
             return solveDfs();
         }
 
-        // Complexitate: O(n + m + n * log n pentru sortare)
+        // Complexitate: O(n + m + n * log n): parcurgerea DFS - O(n + m), sortare - O(n log n)
+        // Observatie: Parcurgerea poate fi inlocuita si cu BFS.
         private ArrayList<Pair<ArrayList<Integer>, Integer>> solveDfs() {
             // vectorul rezultat, contine lanturile si costul minim pentru ele   
             ArrayList<Pair<ArrayList<Integer>, Integer>> all_components = new ArrayList<>();
@@ -97,8 +98,8 @@ public class sol1_dfs {
             // pentru fiecare nod
             for (int node = 1; node <= n; node++) {
                 // Incepem un lant nou doar daca nodul
-                // nu e vizitat si e la inceputul unei lant.
-                if (!visited[node] && !not_start[node]) {
+                // nu e vizitat si are gradul intern 0.
+                if (!visited[node] && in_degree[node] == 0) {
 
                     // In Java nu avem transmitere prin referinta pentru int; 
                     // il vom pasa intr-un arrray cu un element.

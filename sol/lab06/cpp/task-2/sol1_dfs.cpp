@@ -68,7 +68,7 @@ private:
     // porneste o parcurgere DFS din node
     // foloseste vectorul visited pentru a marca nodurile vizitate
     void dfs(int node, vector<int>& visited, vector<int>& topsort) {
-        visited[node] = 1; // marcheze nodul ca fiind vizitat
+        visited[node] = 1; // marchez nodul ca fiind vizitat
 
         // parcurg vecinii
         for (auto& neigh : adj[node]) {
