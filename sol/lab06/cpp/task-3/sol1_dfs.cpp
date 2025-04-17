@@ -29,18 +29,18 @@ private:
     // Hint: Fiecare nod are exact un vecin (putem folosi un hashtable).
     vector<pair<int, int>> adj[NMAX];
 
-    // Stocare noduri care nu au gradul intern 0
-    vector<bool> not_start;
+    // Gradul intern al nodurilor.
+    vector<int> in_degree;
 
     void read_input() {
         cin >> n >> m;
 
-        not_start.resize(n + 1);
+        in_degree.resize(n + 1);
         for (int i = 0; i < m; ++i) {
             int x, y, p;
             cin >> x >> y >> p;
             adj[x].push_back({y, p});
-            not_start[y] = true;
+            in_degree[y]++;
         }
     }
 
@@ -49,6 +49,7 @@ private:
     }
 
     // Complexitate: O(n + m + n * log n): parcurgerea DFS - O(n + m), sortare - O(n log n)
+    // Observatie: Parcurgerea poate fi inlocuita si cu BFS.
     vector<pair<vector<int>, int>> solve_dfs() {
         // vectorul rezultat, contine lanturile si costul minim pentru ele
         vector<pair<vector<int>, int>> all_components;
@@ -58,9 +59,9 @@ private:
 
         // pentru fiecare nod
         for (int node = 1; node <= n; ++node) {
-            // Incepem un lant nou doar daca nodul
-            // nu e vizitat si e la inceputul unei lant.
-            if (!visited[node] && !not_start[node]) {
+            // Incepem un lant nou doar daca nodul nu a fost vizitat
+            // si are gradul intern 0.
+            if (!visited[node] && in_degree[node] == 0) {
                 vector<int> current_component;
 
                 int min_cost = numeric_limits<int>::max();
@@ -84,7 +85,7 @@ private:
     // porneste o parcurgere DFS din node
     // foloseste vectorul visited pentru a marca nodurile vizitate
     void dfs(int node, vector<int>& visited, vector<int>& current_component, int& min_cost) {
-        visited[node] = 1; // marcheze nodul ca fiind vizitat
+        visited[node] = 1; // marchez nodul ca fiind vizitat
         current_component.push_back(node); // adaug nodul la componenta curenta
 
         // parcurg vecinii
