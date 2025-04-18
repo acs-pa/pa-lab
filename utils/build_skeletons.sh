@@ -18,7 +18,7 @@ declare -a labs=(
     "lab05"
     "lab06"
     "lab07"
-    "lab09"
+    "lab08"
     "lab10"
     "lab11"
     "lab12"
