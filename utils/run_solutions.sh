@@ -25,6 +25,10 @@ declare -a solutions=(
     "lab06,java"
     "lab07,cpp"
     "lab07,java"
+    "lab08,cpp"
+    "lab08,java"
+    "lab09,cpp"
+    "lab09,java"
 )
 
 for solution in "${solutions[@]}"; do
