@@ -20,7 +20,7 @@ declare -a labs=(
     "lab07"
     "lab08"
     "lab09"
-    "lab11"
+    "lab10"
     "lab12"
 )
 
