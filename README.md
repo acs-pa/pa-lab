@@ -3,24 +3,27 @@
 # pa-lab
 
 ## Descriere
-Aici vor fi publicate materialele pentru laboratoarele de la Proiectarea Algoritmilor:
-* `docs/`: diverse materiale utile pentru PA
-* `tutorial/`: diverse tutoriale
-* `demos/labxy/`: demo pentru `labxy`
-* `skel/labxy/`: skel pentru `labxy`
-* `sol/labxy/`: soluții posibile pentru `labxy`
-* `utils/`: scripturi de uz intern pentru echipa de PA
+
+Aici vor fi publicate materialele pentru laboratoarele de PA (Proiectarea Algoritmilor):
+
+* `docs/`: Diverse documente utile pentru PA.
+* `tutorial/`: Tutoriale: C++, Java, Rust, Python.
+* `algorithms/labxy/`: Algoritmi standard pentru laboratorul `xy`. Echipa oferă implementări complete pentru fiecare algoritm în toate limbajele permise.
+* `utils/`: Scripturi de uz intern.
 
 ## Maintainers:
+
 * Darius Neațu (neatudarius@gmail.com)
 * Radu Nichita (radunichita99@gmail.com)
+* Andrei Preda (preda.andrei174@gmail.com)
+* Matei Mantu (matei.mantu1@gmail.com)
+* Vlad Ulmeanu (vlad.ulmeanu01@gmail.com)
 
 ## Precizări și recomandări
-### Limbaje
-* Limbaje permise:
-  * laborator: `C++` / `Java`
-  * teme / teste practice: `C++` / `C` / `Java`
-* Limbaj recomandat: `C++` - pentru flexibilitatea pe care o oferă `STL` pentru tipul de probleme de la PA (comparativ cu `Java Collections`).
 
-### Setup
+* Suportul teoretic pentru laboratoare [ocw.cs.pub.ro/courses/pa](https://ocw.cs.pub.ro/courses/pa).
+
+* Limbaje permise pentru laborator + teste practice: `C++` / `Java` / `Rust` / `Python`.
+
 * Recomandăm să codați în `Visual Studio Code` pe `Linux` (detalii în `tutorial/setup.md`).
+
