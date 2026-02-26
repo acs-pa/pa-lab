@@ -5,6 +5,7 @@
 ## Compilers
 
 ### C++
+
 Use a recent `g++` version: at least `g++-7`, recommended `g++-10`.
 ```bash
 $ sudo add-apt-repository ppa:ubuntu-toolchain-r/test
@@ -14,6 +15,7 @@ $ sudo apt install g++-10
 ```
 
 ### Java
+
 Use Java 10 or later.
 ```bash
 # java 11
@@ -55,6 +57,19 @@ openjdk version "10" 2018-03-20
 OpenJDK Runtime Environment 18.3 (build 10+46)
 OpenJDK 64-Bit Server VM 18.3 (build 10+46, mixed mode)
 ```
+
+### Rust
+
+Use Rust 1.0 or later.
+
+```bash
+$  sudo apt install rustc
+$  rustc --version
+rustc 1.0.0
+$  cargo --version
+cargo 1.0.0
+```
+
 ## check deps
 
 Required for running the local checker.
@@ -93,6 +108,7 @@ $ sudo dpkg -i ~/Downloads/code_<version>.deb
 * restart the IDE
 
 ##### VSCode: Java extension
+
 * open VSCode
 * open command shell `CTRL + SHIFT + P`
 * type "install" and select `Extensions: Install Extensions`
@@ -102,6 +118,7 @@ $ sudo dpkg -i ~/Downloads/code_<version>.deb
 * restart the IDE
 
 ##### VSCode: Markdown extension (local rendering)
+
 * open VSCode
 * open command shell `CTRL + SHIFT + P`
 * type "install" and select `Extensions: Install Extensions`
@@ -114,7 +131,9 @@ $ sudo dpkg -i ~/Downloads/code_<version>.deb
 * preview the docs
 
 #### IntelliJ IDEA
+
 #### install
+
 ```bash
 $ sudo add-apt-repository ppa:mmk2410/intellij-idea
 $ sudo apt update

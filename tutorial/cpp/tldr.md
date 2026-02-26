@@ -10,14 +10,14 @@ NOTE: `should` on this page it's considered to be something like tips & tricks f
 ```cpp
 #include <iostream>      // cin, cout
 #include <fstream>       // ifstream, ofstream
+#include <memory> // unique_ptr pentru Task
 using namespace std;
 
 class Task {
 public:
     void solve() {
         read_input();
-        get_result();
-        print_output();
+        write_output(get_result());
     }
 
 private:
@@ -29,31 +29,27 @@ private:
         fin.close();
     }
 
-    void get_result() {
+    int get_result() {
         // TODO: implement the solution
+        return 0;
     }
 
-    void print_output() {
+    void write_output(int result) {
         ofstream fout("out");
-        // TODO: write the solution
+        fout << result;
         fout.close();
     }
 };
 
 // [ATENTIE] NU modifica functia main!
 int main() {
-    // * se aloca un obiect Task pe heap
-    // (se presupune ca e prea mare pentru a fi alocat pe stiva)
-    // * se apeleaza metoda solve()
-    // (citire, rezolvare, printare)
-    // * se distruge obiectul si se elibereaza memoria
-    auto* task = new (nothrow) Task(); // hint: cppreference/nothrow
+    // Se aloca un obiect Task pe heap pe care se apeleaza metoda solve().
+    std::unique_ptr<Task> task {new (nothrow) Task()};
     if (!task) {
-        cerr << "new failed: WTF are you doing? Throw your PC!\n";
+        std::cerr << "new failed: WTF are you doing? Throw your PC!\n";
         return -1;
     }
     task->solve();
-    delete task;
     return 0;
 }
 ```
@@ -63,7 +59,7 @@ Notes:
 * You `don't` need to ever change the `main()` function!
 * You `need` to complete the implementation for the `Task` class.
   * The reading/writing must be done with `<fstream>` for performance reasonse.
-    * Usually, the skeleton already implements the `read_input()` and `print_output()` methods.
+    * Usually, the skeleton already implements the `read_input()` and `write_output()` methods.
   * You need to implement the `get_result()` method.
   * Optionally, you can add other helper methods to the class.
 * The `check` command compiles and runs the tasks.
