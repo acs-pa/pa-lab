@@ -2,6 +2,10 @@
 
 name: Greetings
 
+permissions:
+  pull-requests: write
+  issues: write
+
 on: [pull_request, issues]
 
 jobs:
