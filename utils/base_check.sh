@@ -8,22 +8,14 @@ FAILED_TOTAL=0
 MAX_SIZE_SHOWN=30
 
 CXX=g++
-CXXFLAGS="-std=c++17 -Werror=vla -O2"
-JAVAFLAGS="-Xmx128M -Xss128M"
+RUSTC=rustc
+JAVAC=javac
+PYTHON=python3
 
-# Source file for each language
-if [ -z "${SOURCE_CPP}" ]; then
-  SOURCE_CPP=main.cpp
-fi
-if [ -z "${EXE_CPP}" ]; then
-  EXE_CPP=main
-fi
-if [ -z "${SOURCE_JAVA}" ]; then
-  SOURCE_JAVA=Main.java
-fi
-if [ -z "${MAIN_CLASS_JAVA}" ]; then
-  MAIN_CLASS_JAVA=Main
-fi
+CXX_FLAGS="-Werror=vla -O3"
+JAVA_FLAGS="-Xmx128M -Xss128M -server"
+RUST_FLAGS="-C opt-level=3"
+PYTHONFLAGS="-u"
 
 # timeout for each language
 if [ -z "${TIMEOUT_CPP}" ]; then
@@ -32,11 +24,18 @@ fi
 if [ -z "${TIMEOUT_JAVA}" ]; then
   TIMEOUT_JAVA=2
 fi
+if [ -z "${TIMEOUT_RUST}" ]; then
+  TIMEOUT_RUST=1
+fi
+if [ -z "${TIMEOUT_PYTHON}" ]; then
+  TIMEOUT_PYTHON=1
+fi
 
 # Cross-platform timeout (using perl).
 timeout() {
   perl -e 'alarm shift; exec @ARGV' "$@"
 }
+
 
 check_prerequisites() {
   for prereq in "$@"; do
@@ -55,34 +54,23 @@ check_prerequisites_java() {
   check_prerequisites python3 java javac
 }
 
-show_help() {
-  echo "./check <lang> [task] [test_number|source_file]"
-  echo ""
-  echo -e "Rulati ./check avand ca director curent radacina scheletului"
-  echo -e "de laborator."
-  echo ""
-  echo -e "<lang>: \"java\" sau \"cpp\""
-  echo -e "Daca nu este specificat [test_number], se ruleaza toate testele"
-  echo -e "Daca nu este specificat [task], se ruleaza toate taskurile"
-  echo ""
-  echo -e "De exemplu, pentru a rula testul 2 din taskul 1, limbajul Java:"
-  echo -e "\t./check java task-1 2"
-  echo ""
-  echo -e "Pentru a compila/rula un anumit fisier sursa (ex. o solutie):"
-  echo -e "\t./check cpp task-1 sol1_binary_search.cpp"
-  echo -e "\t./check java task-1 sol1_binary_search.java"
-  echo ""
-  echo -e "De asemenea, \"./check clean\" curata binarele create in timpul"
-  echo -e "executiei."
-  echo ""
-  echo -e "De asemenea, \"./check pack <nume>\" realizeaza o arhiva zip"
-  echo -e "in directorul parinte cu numele specificat."
-  echo -e "Exemplu: ./check pack 321CA_GigelGigel_lab00"
-  echo ""
-  echo -e "Pentru a rula teste custom, modificati tests/<task>/custom.in si"
-  echo -e "tests/<task>/custom.ref, ruland apoi:"
-  echo -e "\t./check <lang> <task> custom"
+check_prerequisites_rust() {
+  check_prerequisites python3 rustc
+}
 
+check_prerequisites_python() {
+  check_prerequisites python3
+}
+
+show_help() {
+  echo "Utilizare: ./check <lang>/<algorithm>/<sursa>"
+  echo ""
+  echo " (presupune ca directorul curent este radacina laboratorului curent)"
+  echo ""
+  echo -e "algorithms/lab01 $  ./check cpp/01-ssm/01-ssm.cpp"
+  echo -e "algorithms/lab01 $ ./check java/01-ssm/src/ssm.java"
+  echo -e "algorithms/lab01 $ ./check rust/01-ssm/01-ssm.rs"
+  echo -e "algorithms/lab01 $ ./check python/01-ssm/01-ssm.py"
   exit 1
 }
 
@@ -101,39 +89,94 @@ task_index() {
 
 compile_java() {
   result=0
-  command pushd "$1" &>/dev/null
-  if [[ ! (-f bin/"${MAIN_CLASS_JAVA}.class" && bin/"${MAIN_CLASS_JAVA}.class" -nt src/"${SOURCE_JAVA}") ]]; then
-    mkdir -p bin
-    echo "Compiling $1..." >>"$LOG_NAME" 2>&1
-    javac src/"${SOURCE_JAVA}" -d bin >"$TMP_FILE" 2>&1
-    result=$?
-    cat "$TMP_FILE" >>"$LOG_NAME"
-    head -n 3 "$TMP_FILE"
-    echo "========================================" >>"$LOG_NAME" 2>&1
+  local task_dir="$1"
+  # Dacă sursa e un path (conține /), compilăm din rădăcina lab-ului, fără a copia sursa.
+  if [[ "${SOURCE_JAVA}" == */* ]]; then
+    mkdir -p "${task_dir}/bin"
+    if [[ ! (-f "${task_dir}/bin/${MAIN_CLASS_JAVA}.class" && "${task_dir}/bin/${MAIN_CLASS_JAVA}.class" -nt "${SOURCE_JAVA}") ]]; then
+      echo "Compiling ${SOURCE_JAVA}..." >>"$LOG_NAME" 2>&1
+      ${JAVAC} "${SOURCE_JAVA}" -d "${task_dir}/bin" >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+  else
+    command pushd "$task_dir" &>/dev/null
+    if [[ ! (-f bin/"${MAIN_CLASS_JAVA}.class" && bin/"${MAIN_CLASS_JAVA}.class" -nt src/"${SOURCE_JAVA}") ]]; then
+      mkdir -p bin
+      echo "Compiling $task_dir..." >>"$LOG_NAME" 2>&1
+      ${JAVAC} src/"${SOURCE_JAVA}" -d bin >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+    command popd &>/dev/null
   fi
-  command popd &>/dev/null
   return $result
 }
 
 compile_cpp() {
   result=0
-  command pushd "$1" &>/dev/null
-  if [[ ! (-f "${EXE_CPP}" && "${EXE_CPP}" -nt "${SOURCE_CPP}") ]]; then
-    echo "Compiling $1..." >>"$LOG_NAME" 2>&1
-    ${CXX} ${CXXFLAGS} -o "${EXE_CPP}" "${SOURCE_CPP}" >"$TMP_FILE" 2>&1
-    result=$?
-    cat "$TMP_FILE" >>"$LOG_NAME"
-    head -n 3 "$TMP_FILE"
-    echo "========================================" >>"$LOG_NAME" 2>&1
+  local task_dir="$1"
+  # Dacă sursa e un path (conține /), compilăm din rădăcina lab-ului, fără a copia sursa.
+  if [[ "${SOURCE_CPP}" == */* ]]; then
+    if [[ ! (-f "${task_dir}/${EXE_CPP}" && "${task_dir}/${EXE_CPP}" -nt "${SOURCE_CPP}") ]]; then
+      echo "Compiling ${SOURCE_CPP}..." >>"$LOG_NAME" 2>&1
+      ${CXX} ${CXX_FLAGS} -o "${task_dir}/${EXE_CPP}" "${SOURCE_CPP}" >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+  else
+    command pushd "$task_dir" &>/dev/null
+    if [[ ! (-f "${EXE_CPP}" && "${EXE_CPP}" -nt "${SOURCE_CPP}") ]]; then
+      echo "Compiling $task_dir..." >>"$LOG_NAME" 2>&1
+      ${CXX} ${CXX_FLAGS} -o "${EXE_CPP}" "${SOURCE_CPP}" >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+    command popd &>/dev/null
   fi
-  command popd &>/dev/null
+  return $result
+}
+
+compile_rust() {
+  result=0
+  local task_dir="$1"
+  # Dacă sursa e un path (conține /), compilăm din rădăcina lab-ului, fără a copia sursa.
+  if [[ "${SOURCE_RUST}" == */* ]]; then
+    if [[ ! (-f "${task_dir}/${EXE_RUST}" && "${task_dir}/${EXE_RUST}" -nt "${SOURCE_RUST}") ]]; then
+      echo "Compiling ${SOURCE_RUST}..." >>"$LOG_NAME" 2>&1
+      ${RUSTC} ${RUST_FLAGS} -o "${task_dir}/${EXE_RUST}" "${SOURCE_RUST}" >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+  else
+    command pushd "$task_dir" &>/dev/null
+    if [[ ! (-f "${EXE_RUST}" && "${EXE_RUST}" -nt "${SOURCE_RUST}") ]]; then
+      echo "Compiling $task_dir..." >>"$LOG_NAME" 2>&1
+      ${RUSTC} ${RUST_FLAGS} -o "${EXE_RUST}" "${SOURCE_RUST}" >"$TMP_FILE" 2>&1
+      result=$?
+      cat "$TMP_FILE" >>"$LOG_NAME"
+      head -n 3 "$TMP_FILE"
+      echo "========================================" >>"$LOG_NAME" 2>&1
+    fi
+    command popd &>/dev/null
+  fi
   return $result
 }
 
 run_java() {
   command pushd "$1" &>/dev/null
   echo "Running $1..." >>"$LOG_NAME" 2>&1
-  timeout ${TIMEOUT_JAVA} java ${JAVAFLAGS} -cp bin "${MAIN_CLASS_JAVA}" >>"$LOG_NAME" 2>&1
+  timeout ${TIMEOUT_JAVA} java ${JAVA_FLAGS} -cp bin "${MAIN_CLASS_JAVA}" >>"$LOG_NAME" 2>&1
   result=$?
   echo "========================================" >>"$LOG_NAME" 2>&1
   command popd &>/dev/null
@@ -152,6 +195,17 @@ run_cpp() {
   return $result
 }
 
+run_rust() {
+  command pushd "$1" &>/dev/null
+  echo "Running $1..." >>"$LOG_NAME" 2>&1
+  timeout ${TIMEOUT_RUST} ./"${EXE_RUST}" >>"$LOG_NAME" 2>&1
+  result=$?
+  echo "========================================" >>"$LOG_NAME" 2>&1
+  command popd &>/dev/null
+
+  return $result
+}
+
 cleanup_java() {
   command pushd "$1" &>/dev/null
   rm -rf bin in out
@@ -161,6 +215,41 @@ cleanup_java() {
 cleanup_cpp() {
   command pushd "$1" &>/dev/null
   rm -rf "${EXE_CPP}" in out
+  command popd &>/dev/null
+}
+
+cleanup_rust() {
+  command pushd "$1" &>/dev/null
+  rm -rf "${EXE_RUST}" in out
+  command popd &>/dev/null
+}
+
+compile_python() {
+  local task_dir="$1"
+  if [[ "${SOURCE_PYTHON}" == */* ]]; then
+    [[ -f "${SOURCE_PYTHON}" ]] || { echo "Missing: ${SOURCE_PYTHON}" >>"$LOG_NAME" 2>&1; return 1; }
+  else
+    [[ -f "${task_dir}/${SOURCE_PYTHON}" ]] || { echo "Missing: ${task_dir}/${SOURCE_PYTHON}" >>"$LOG_NAME" 2>&1; return 1; }
+  fi
+  return 0
+}
+
+run_python() {
+  command pushd "$1" &>/dev/null
+  echo "Running $1..." >>"$LOG_NAME" 2>&1
+  # Rulăm scriptul din directorul task-ului (in/out sunt acolo).
+  local script="${SOURCE_PYTHON}"
+  [[ "${SOURCE_PYTHON}" == */* ]] && script="$(basename "${SOURCE_PYTHON}")"
+  timeout ${TIMEOUT_PYTHON} ${PYTHON} ${PYTHONFLAGS} "${script}" >>"$LOG_NAME" 2>&1
+  result=$?
+  echo "========================================" >>"$LOG_NAME" 2>&1
+  command popd &>/dev/null
+  return $result
+}
+
+cleanup_python() {
+  command pushd "$1" &>/dev/null
+  rm -f in out
   command popd &>/dev/null
 }
 
@@ -183,25 +272,30 @@ compile_and_run() {
   fi
 
   cp "tests/${task}/${num}.in" "${lang}/${task}/in"
+  result=0
   run_${lang} "${lang}/${task}"
   if [[ $? -ne 0 ]]; then
     result=2
   fi
 
   if [[ $result -eq 0 ]]; then
-    "tests/${task}/check_task" "tests/${task}/${num}.in" "tests/${task}/${num}.ref" "${lang}/${task}/out" >"$TMP_FILE" 2>&1
-    checker_result=$?
-    cat "$TMP_FILE" >>"$LOG_NAME"
-    head -n 3 "$TMP_FILE"
-    if [[ $checker_result -ne 0 ]]; then
-      result=3
-    fi
+   if [[ ! -f "tests/${task}/check_task" || ! -x "tests/${task}/check_task" ]]; then
+    echo "No check_task file found for task $task or check_task is not executable"
+    exit 1
+   fi
+
+   "tests/${task}/check_task" "tests/${task}/${num}.in" "tests/${task}/${num}.ref" "${lang}/${task}/out" >"$TMP_FILE" 2>&1
+   checker_result=$?
+   cat "$TMP_FILE" >>"$LOG_NAME"
+   head -n 3 "$TMP_FILE"
+   if [[ $checker_result -ne 0 ]]; then
+     result=3
+   fi
   fi
 
   # If not WA, remove in/out files.
   if [[ $result -ne 3 ]]; then
-    rm "${lang}/${task}/in"
-    rm "${lang}/${task}/out"
+    rm -f "${lang}/${task}/in" "${lang}/${task}/out"
   fi
 
   return $result
@@ -230,8 +324,7 @@ run_single_test() {
       cat "${lang}/${task}/out" | head -n 2 | grep -Ev "^$" | cut -c 1-${MAX_SIZE_SHOWN}
 
       # Clean up in/out now.
-      rm "${lang}/${task}/in"
-      rm "${lang}/${task}/out"
+      rm -f "${lang}/${task}/in" "${lang}/${task}/out"
     fi
   else
     echo "Successful!"
@@ -245,6 +338,7 @@ run_task_tests() {
   echo "========================================================================================="
   lang=$1
   task=$2
+  # SOURCE_* / EXE_* sunt setate de apelant din path (lang/algorithm/source.ext).
 
   task_num=$(task_index $task)
   if [[ $task_num -eq -1 ]]; then
@@ -264,6 +358,7 @@ run_task_tests() {
       fi
     fi
   else
+    failed=0
     num=1
     while [[ $num -le ${NUM_TESTS[$task_num]} ]]; do
       run_single_test "$lang" "$task" "$num"
@@ -275,98 +370,46 @@ run_task_tests() {
   fi
 
   if [[ $failed -eq 0 ]]; then
-    echo "Problema $task completa."
+    echo "Implementation $task 100% complete."
+  fi
+
+  # Șterge executabilul (și in/out) după rularea testelor.
+  if [[ "$lang" == cpp || "$lang" == java || "$lang" == rust || "$lang" == python ]]; then
+    cleanup_${lang} "${lang}/${task}"
   fi
   echo "========================================================================================="
-}
-
-run_all_tests() {
-  lang=$1
-
-  for task in ${TASKS[@]}; do
-    run_task_tests "$lang" "$task"
-  done
-}
-
-cleanup() {
-  rm -f "$LOG_NAME" "$TMP_FILE"
-  for task in ${TASKS[@]}; do
-    cleanup_cpp "cpp/${task}"
-    cleanup_java "java/${task}"
-  done
-}
-
-
-pack() {
-  set -x
-  if [[ "${PACK_SOL}" = "yes" ]]; then
-    PACK_EXCLUDES=
-  else
-    PACK_EXCLUDES="--exclude **sol_**_**.cpp --exclude **sol_**_**.java"
-  fi
-  skel_dir=$(basename "$(pwd)")
-  command pushd .. &>/dev/null
-  zip -FSr "${1}" "${skel_dir}/" \
-    ${PACK_EXCLUDES} \
-    &>/dev/null && echo "Done packing!"
-  command popd &>/dev/null
 }
 
 # Clear log.
 echo >"$LOG_NAME"
 
-# Check argc > 0.
-if [[ $# -eq 0 ]]; then
+if [[ $# -ne 1 ]]; then
   show_help
 fi
 
-# Check argv[1] == (clean|cpp|java).
-if [[ "$1" != "clean" && "$1" != "cpp" && "$1" != "java" && "$1" != "pack" ]]; then
-  show_help
-fi
-
-# "clean" is only valid with 1 argument.
-if [[ "$1" == "clean" && $# -ge 2 ]]; then
-  show_help
-fi
-
-# If "clean", do cleanup.
-if [[ "$1" == "clean" ]]; then
-  cleanup
-  exit 0
-fi
-
-# "pack" is only valid with 1 argument.
-if [[ "$1" == "pack" && $# -ne 2 ]]; then
-  show_help
-fi
-
-# If "pack", do packing.
-if [[ "$1" == "pack" ]]; then
-  cleanup
-  pack "$2"
-  exit 0
-fi
-
-check_prerequisites_"$1"
-
-if [[ $# -eq 1 ]]; then
-  run_all_tests "$1"
-elif [[ $# -eq 2 ]]; then
-  run_task_tests "$1" "$2"
-elif [[ $# -eq 3 ]]; then
-  if [[ "$3" == *.cpp ]] || [[ "$3" == *.java ]]; then
-    # Al treilea argument este un fisier sursa: foloseste-l pentru compilare/rulare task
-    if [[ "$3" == *.cpp ]]; then
-      export SOURCE_CPP="$3"
-      export EXE_CPP="${3%.cpp}"
-    else
-      export SOURCE_JAVA="$3"
-      export MAIN_CLASS_JAVA="${3%.java}"
+# Singura optiune: path lang/algorithm/source.ext
+if [[ "$1" == */* && ("$1" == *.cpp || "$1" == *.java || "$1" == *.rs || "$1" == *.py) ]]; then
+  path_lang="${1%%/*}"
+  path_rest="${1#*/}"
+  path_task="${path_rest%%/*}"
+  if [[ "$path_lang" == cpp || "$path_lang" == java || "$path_lang" == rust || "$path_lang" == python ]]; then
+    check_prerequisites_"$path_lang"
+    if [[ "$1" == *.cpp ]]; then
+      export SOURCE_CPP="$1"
+      export EXE_CPP="$(basename "${1%.cpp}")"
+    elif [[ "$1" == *.java ]]; then
+      export SOURCE_JAVA="$1"
+      export MAIN_CLASS_JAVA="$(basename "${1%.java}")"
+    elif [[ "$1" == *.rs ]]; then
+      export SOURCE_RUST="$1"
+      export EXE_RUST="$(basename "${1%.rs}")"
+    elif [[ "$1" == *.py ]]; then
+      export SOURCE_PYTHON="$1"
+      export EXE_PYTHON="$(basename "${1%.py}")"
     fi
-    run_task_tests "$1" "$2"
+    run_task_tests "$path_lang" "$path_task"
   else
-    run_single_test "$1" "$2" "$3"
+    show_help
   fi
 else
   show_help

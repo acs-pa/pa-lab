@@ -15,7 +15,7 @@ Links:
    * [cppreference/container](https://en.cppreference.com/w/cpp/container): STL containers docs
 * [C reference](https://en.cppreference.com/w/c): C API also available in C++
 
-C++ has multiple standards (see [cppreference/history](https://en.cppreference.com/w/cpp/language/history)). In this tutorial the C++17 standard (g++ flag: `-std=c++17`) is assumed. The laboratory skeletons use C++17 and we strongly encourage to also do it for homeworks / projects.
+C++ has multiple standards (see [cppreference/history](https://en.cppreference.com/w/cpp/language/history)). In this tutorial the latest C++ standard is assumed. The laboratory skeletons use latest C++ standard and we strongly encourage to also do it for homeworks / projects.
 
 ## C++ basics
 
@@ -50,7 +50,7 @@ Explanations:
 * To compile any C++ program, use
 ```bash
 # compile
-g++ -Wall -Wextra -std=c++17 <source_name> -o <executable_name>
+g++ -Wall -Wextra <source_name> -o <executable_name>
 ```
 
 * To run any compiled C++ program, use
@@ -61,7 +61,6 @@ g++ -Wall -Wextra -std=c++17 <source_name> -o <executable_name>
 ---
 Notes for `PA-only`:
   * Compiler flags:
-    * always use `-std=c++17`
     * never use optimizations flags (the purpose of this class is to find the solution with the best complexity)
   * It's `encouraged` to use `using namespace std` ([stackoverflow/using-namespace-std](https://stackoverflow.com/questions/1452721/why-is-using-namespace-std-considered-bad-practice)) instead of specifing `` everywhere. This tutorial we'll use the second approach.
   * Always use the provided skeleton for the laboratory.

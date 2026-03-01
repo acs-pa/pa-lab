@@ -1,0 +1,29 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# Composite action: setup pentru cele 4 limbaje (C++, Java, Rust, Python).
+# C++ (g++) și Python sunt pe ubuntu-latest; Rust și Java se instalează mai jos.
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Rust
+      uses: dtolnay/rust-toolchain@stable
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: temurin
+        java-version: '21'
+
+    - name: Verify toolchains (C++, Java, Rust, Python)
+      shell: bash
+      run: |
+        echo "=== C++ (g++) ==="
+        g++ --version
+        echo "=== Java ==="
+        javac -version
+        java -version 2>&1
+        echo "=== Rust ==="
+        rustc --version
+        cargo --version
+        echo "=== Python ==="
+        python3 --version
