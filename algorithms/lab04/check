@@ -7,6 +7,8 @@ NUM_TESTS=(11 12 10 10)
 
 TIMEOUT_CPP=3
 TIMEOUT_JAVA=6
+TIMEOUT_RUST=3
+TIMEOUT_PYTHON=6
 
 DIRNAME=$(realpath $(dirname "${0}"))
 source "${DIRNAME}"/../../utils/base_check.sh
