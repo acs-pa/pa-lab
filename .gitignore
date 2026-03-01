@@ -32,16 +32,9 @@
 *.tmp
 *.err.log
 *.class
-*bin*
+**/bin/
 *.project
 **/out
 **/in
 *.zip
 **.DS_Store
-
-
-utils/templates/
-utils/repo_diff.sh
-utils/skel_export.sh
-utils/skel_init.sh
-utils/lint_all.sh
