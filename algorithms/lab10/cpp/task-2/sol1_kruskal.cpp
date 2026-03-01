@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <fstream>
 #include <iostream>
+#include <memory> // unique_ptr pentru Task
 #include <queue>
 #include <set>
 #include <utility>

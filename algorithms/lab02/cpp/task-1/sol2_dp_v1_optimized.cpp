@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <memory> // unique_ptr pentru Task
 #include <vector>
 using namespace std;
 
@@ -15,7 +16,7 @@ class Task {
 public:
     void solve() {
         read_input();
-        print_output(get_result());
+        write_output(get_result());
     }
 
 private:
@@ -105,7 +106,7 @@ private:
         return sum_even;
     }
 
-    void print_output(int result) {
+    void write_output(int result) {
         ofstream fout("out");
         fout << result;
         fout.close();
@@ -114,17 +115,11 @@ private:
 
 // [ATENTIE] NU modifica functia main!
 int main() {
-    // * se aloca un obiect Task pe heap
-    // (se presupune ca e prea mare pentru a fi alocat pe stiva)
-    // * se apeleaza metoda solve()
-    // (citire, rezolvare, printare)
-    // * se distruge obiectul si se elibereaza memoria
-    auto* task = new (nothrow) Task(); // hint: cppreference/nothrow
+    std::unique_ptr<Task> task {new (nothrow) Task()};
     if (!task) {
-        cerr << "new failed: WTF are you doing? Throw your PC!\n";
+        std::cerr << "new failed: WTF are you doing? Throw your PC!\n";
         return -1;
     }
     task->solve();
-    delete task;
     return 0;
 }
