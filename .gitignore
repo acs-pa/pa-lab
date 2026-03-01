@@ -32,16 +32,19 @@
 *.tmp
 *.err.log
 *.class
-*bin*
+**/bin/
 *.project
 **/out
 **/in
 *.zip
 **.DS_Store
 
-
+utils/build_templates.sh
+utils/build_demos.sh
 utils/templates/
 utils/repo_diff.sh
 utils/skel_export.sh
 utils/skel_init.sh
 utils/lint_all.sh
+.github/workflows/ci_templates.yml
+.github/workflows/ci_demos.yml

@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+# SPDX-License-Identifier: BSD-3-Clause
+# Verifică că ieșirea este un SCMAX valid: lungime corectă, subșir strict crescător din v.
+# Acceptă orice soluție corectă (enunț: „Daca există mai multe solutii se poate afisa oricare”).
+
+import sys
+
+
+def main():
+    if len(sys.argv) != 4:
+        sys.stderr.write("Usage: check_task <in> <ref> <out>\n")
+        sys.exit(1)
+
+    file_in, file_ref, file_out = sys.argv[1], sys.argv[2], sys.argv[3]
+
+    with open(file_in) as f:
+        n = int(f.readline().strip())
+        a = list(map(int, f.readline().split()))
+    if len(a) != n:
+        sys.stdout.write("Input invalid: %d numere asteptate.\n" % n)
+        sys.exit(1)
+
+    with open(file_ref) as f:
+        L_expected = int(f.readline().strip())
+
+    with open(file_out) as f:
+        lines = f.readlines()
+    if len(lines) < 2:
+        sys.stdout.write("Iesire invalida: cel putin doua linii.\n")
+        sys.exit(1)
+    try:
+        L_out = int(lines[0].strip())
+        seq = list(map(int, lines[1].split()))
+    except (ValueError, IndexError):
+        sys.stdout.write("Iesire invalida: format.\n")
+        sys.exit(1)
+
+    if L_out != L_expected:
+        sys.stdout.write("Lungime gresita: %d asteptat, %d obtinut.\n" % (L_expected, L_out))
+        sys.exit(1)
+
+    if len(seq) != L_out:
+        sys.stdout.write("Numar elemente pe a doua linie (%d) != lungime (%d).\n" % (len(seq), L_out))
+        sys.exit(1)
+
+    # Strict crescător
+    for i in range(1, len(seq)):
+        if seq[i] <= seq[i - 1]:
+            sys.stdout.write("Secventa nu e strict crescatoare.\n")
+            sys.exit(1)
+
+    # Subșir din a (ordinea din vectorul a)
+    idx = 0
+    for val in seq:
+        while idx < n and a[idx] != val:
+            idx += 1
+        if idx >= n:
+            sys.stdout.write("Element %d nu apare in input sau nu e in ordine.\n" % val)
+            sys.exit(1)
+        idx += 1
+
+    sys.exit(0)
+
+
+if __name__ == "__main__":
+    main()

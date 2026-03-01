@@ -1,0 +1,22 @@
+# SPDX-License-Identifier: BSD-3-Clause
+
+name: CI - build and test algorithms
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-test-algorithms:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up languages (C++, Java, Rust, Python)
+        uses: ./.github/actions/setup-languages
+
+      - name: Build and test algorithms
+        run: utils/build_and_test_algorithms.sh
