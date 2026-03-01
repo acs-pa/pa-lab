@@ -7,14 +7,14 @@
 - Acest document are ca scop asocierea unor algoritmi / clase de algoritmi cu anumite complexități.
 De exemplu, pornind de la limita de timp din enunț, se poate deduce care este complexitatea optimă în funcție de variabilele date, iar de la complexitate se pot deduce câțiva posibili algoritmi pentru a rezolva problema dată.
 
-- Pentru un procesor modern, în **C/C++**, numărul de instrucțiuni executate în 1s este în $[10^6, 10^7]$.
+- LA PA, vom considera că numărul de instrucțiuni executate în 1s este în $[10^6, 10^8]$ (intervalul real depinde de procesor / arhitectură, dar și de limbaj - de exemplu, C++ este mult mai rapid decât Java).
 - Pentru **Java**, de obicei, timpul de execuție este cel puțin dublu (în special în problemele în care există input sau output cu dimensiuni foarte mari).
 
 |Ordin de mărime|Complexitate|
 |-|-|
 |$\left[10^{12}, 10^{18}\right]$|$O(\log{n})$|
-|$\left[10^{7}, 10^{12}\right]$|$O(\sqrt{n})$|
-|$\left[10^{6}, 10^{7}\right]$|$O(n)$|
+|$\left[10^{8}, 10^{12}\right]$|$O(\sqrt{n})$|
+|$\left[10^{6}, 10^{8}\right]$|$O(n)$|
 |$10^{5}$|$O(n \log{n})$|
 |$10^{4}$|$O(n \sqrt{n})$|
 |$10^{3}$|$O(n^2)$|
