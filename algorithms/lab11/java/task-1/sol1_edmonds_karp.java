@@ -208,6 +208,7 @@ public class sol1_edmonds_karp {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

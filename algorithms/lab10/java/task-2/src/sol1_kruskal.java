@@ -185,6 +185,7 @@ class Solution {
     }
 }
 
+// [ATENTIE] NU modifica functia main!
 // Sterge clasa Main daca submiti pe LeetCode
 // (platforma impune implementarea doar a clasei Solution).
 class Main { public static void main(String[] args) { } }
