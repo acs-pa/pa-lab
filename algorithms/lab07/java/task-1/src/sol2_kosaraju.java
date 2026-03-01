@@ -141,6 +141,7 @@ public class sol2_kosaraju {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

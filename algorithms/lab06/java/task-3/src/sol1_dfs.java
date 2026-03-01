@@ -137,6 +137,7 @@ public class sol1_dfs {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }
