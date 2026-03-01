@@ -106,6 +106,7 @@ public class sol1_backtracking {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

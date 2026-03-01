@@ -370,6 +370,7 @@ public class sol1_johnson {
 
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

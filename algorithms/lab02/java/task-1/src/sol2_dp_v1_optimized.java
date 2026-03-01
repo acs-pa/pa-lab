@@ -115,6 +115,7 @@ public class sol2_dp_v1_optimized {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

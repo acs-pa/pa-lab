@@ -114,6 +114,7 @@ public class sol1_rebuild {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }

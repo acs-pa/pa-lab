@@ -198,6 +198,7 @@ public class sol2_mst_prim {
         }
     }
 
+    // [ATENTIE] NU modifica functia main!
     public static void main(String[] args) {
         new Task().solve();
     }
