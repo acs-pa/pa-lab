@@ -1,0 +1,12 @@
+[package]
+name = "lab02"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "01-podm"
+path = "01-podm/01-podm.rs"
+
+[[bin]]
+name = "02-gard"
+path = "02-gard/02-gard.rs"

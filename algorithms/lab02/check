@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 NUM_TASKS=2
-TASKS=(task-1 task-2)
+TASKS=(01-podm 02-gard)
 NUM_TESTS=(10 10)
 
 TIMEOUT_CPP=1
-TIMEOUT_JAVA=1
+TIMEOUT_JAVA=2
 TIMEOUT_RUST=1
-TIMEOUT_PYTHON=1
+TIMEOUT_PYTHON=10
 
 DIRNAME=$(realpath $(dirname "${0}"))
 source "${DIRNAME}"/../../utils/base_check.sh
