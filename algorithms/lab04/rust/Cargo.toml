@@ -1,0 +1,24 @@
+[package]
+name = "lab04"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "01-permutari_general"
+path = "01-permutari/01-permutari_general.rs"
+
+[[bin]]
+name = "01-permutari_pruning"
+path = "01-permutari/01-permutari_pruning.rs"
+
+[[bin]]
+name = "01-permutari_reference"
+path = "01-permutari/01-permutari_reference.rs"
+
+[[bin]]
+name = "02-combinari"
+path = "02-combinari/02-combinari.rs"
+
+[[bin]]
+name = "03-soricel"
+path = "03-soricel/03-soricel.rs"
