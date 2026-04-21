@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 NUM_TASKS=4
-TASKS=(task-1 task-2 task-3 task-4)
+TASKS=(01-scc 02-cv 03-ce 04-bcc)
 NUM_TESTS=(10 10 10 10)
 
 TIMEOUT_CPP=1

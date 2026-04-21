@@ -26,15 +26,15 @@ private:
     // exemplu: daca adj[node] = {..., neigh, ...} => exista arcul (node, neigh)
     vector<int> adj[NMAX];
 
-    // parent[node] = parent of node in the DFS traversal
+    // parent[node] = parintele nodului node in parcurgerea DFS
     vector<int> parent;
 
-    // found[node] = the timestamp when node was found (when started to visit its subtree)
-    // Note: The global timestamp is incremented everytime a node is found.
+    // found[node] = momentul cand nodul a fost descoperit (cand a inceput vizitarea subarborelui sau)
+    // Observatie: timestamp-ul global creste de fiecare data cand este descoperit un nod.
     vector<int> found;
 
-    // the minimum accessible timestamp that node can see/access
-    // low_link[node] =  min { found[x] | x is node OR x in ancestors(node) OR x in descendants(node) };
+    // cel mai mic timestamp accesibil pe care il poate vedea/accesa nodul
+    // low_link[node] = min { found[x] | x este node SAU x este in stramosii(node) SAU x este in descendentii(node) };
     vector<int> low_link;
 
     void read_input() {
@@ -49,30 +49,23 @@ private:
     }
 
     vector<int> get_result() {
-        //
-        // TODO: Gasiti toate nodurile critice ale grafului neorientat stocat cu liste de adiacenta in adj.
-        // Rezultatul se va returna sub forma unui vector cu toate punctele critice (ordinea nu conteaza).
-        //
-        // Indicație: Folosiți algoritmul lui Tarjan pentru CV.
-        //
-
         return tarjan_cv();
     }
 
     vector<int> tarjan_cv() {
-        // STEP 1: initialize results
+        // PASUL 1: initializez rezultatele
         parent = vector<int>(n + 1, -1);
         found = vector<int>(n + 1, -1);
         low_link = vector<int>(n + 1, -1);
 
-        // STEP 2: visit all nodes
+        // PASUL 2: vizitez toate nodurile
         unordered_set<int> all_cvs;
-        int timestamp = 0; // global timestamp
+        int timestamp = 0; // timestamp global
         for (int node = 1; node <= n; ++node) {
-            if (parent[node] == -1) { // node not visited
-                parent[node] = node; // convention: the parent of the root is actually the root
+            if (parent[node] == -1) { // nod nevizitat
+                parent[node] = node; // conventie: parintele radacinii este chiar radacina
 
-                // STEP 3: start a new DFS traversal this subtree
+                // PASUL 3: pornesc o noua parcurgere DFS pe acest subarbore
                 dfs(node, timestamp, all_cvs);
             }
         }
@@ -81,41 +74,41 @@ private:
     }
 
     void dfs(int node, int& timestamp, unordered_set<int>& all_cvs) {
-        // STEP 1: a new node is visited - increment the timestamp
-        found[node] = ++timestamp; // the timestamp when node was found
-        low_link[node] = found[node]; // node only knows its timestamp
+        // PASUL 1: un nod nou este vizitat - incrementez timestamp-ul
+        found[node] = ++timestamp; // timestamp-ul la care nodul a fost descoperit
+        low_link[node] = found[node]; // nodul cunoaste doar propriul timestamp
 
-        // STEP 2: visit each neighbour
-        int children = 0; // count all children for node
+        // PASUL 2: vizitez fiecare vecin
+        int children = 0; // numar toti copiii lui node
         for (auto neigh : adj[node]) {
-            // STEP 3: check if neigh is already visited
+            // PASUL 3: verific daca neigh este deja vizitat
             if (parent[neigh] != -1) {
-                // STEP 3.1: update low_link[node] with information gained through neigh
-                // note: because it's an undirected graf, we should ignore the edge to the parent
-                // (the found value of the parent is always less than found value of node)
+                // PASUL 3.1: actualizez low_link[node] cu informatiile obtinute prin neigh
+                // observatie: pentru ca graful este neorientat, trebuie ignorata muchia catre parinte
+                // (valoarea found a parintelui este mereu mai mica decat valoarea found a lui node)
                 if (neigh != parent[node]) {
                     low_link[node] = min(low_link[node], found[neigh]);
                 }
                 continue;
             }
 
-            // STEP 4: save parent
+            // PASUL 4: salvez parintele
             parent[neigh] = node;
-            ++children; // count child
+            ++children; // numar copilul
 
-            // STEP 5: recursively visit the child subree
+            // PASUL 5: vizitez recursiv subarborele copilului
             dfs(neigh, timestamp, all_cvs);
 
-            // STEP 6: update low_link[node] with information gained through neigh
+            // PASUL 6: actualizez low_link[node] cu informatiile obtinute prin neigh
             low_link[node] = min(low_link[node], low_link[neigh]);
 
-            // STEP 7.1: node is a CV if i): *) node is NOT root and **) low_link[neigh] >= found[node]
+            // PASUL 7.1: node este un CV daca i): *) node NU este radacina si **) low_link[neigh] >= found[node]
             if (parent[node] != node && low_link[neigh] >= found[node]) {
                 all_cvs.insert(node);
             }
         }
 
-        // STEP 7.2: node is a CV if i)): *) node is root and **) it hase at leat 2 children
+        // PASUL 7.2: node este un CV daca i)): *) node este radacina si **) are cel putin 2 copii
         if (parent[node] == node && children > 1) {
             all_cvs.insert(node);
         }

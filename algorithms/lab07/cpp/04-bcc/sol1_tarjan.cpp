@@ -40,7 +40,7 @@ private:
     vector<int> found;
 
     // low_link[node] = min { found[x] | x este accesibil din node }
-    // adica timpul minim al unui nou
+    // adica timpul minim al unui nod
     vector<int> low_link;
 
     // stiva folosita pentru a reconstrui componentele biconexe
@@ -65,9 +65,6 @@ private:
     }
 
     vector<vector<int>> get_result() {
-        // TODO: Gasiti componentele biconexe ale grafului neorientat stocat cu liste
-        // de adiacenta in adj.
-
         tarjan();
         return all_bccs;
     }
@@ -137,7 +134,7 @@ private:
                     get_bcc(Edge(node, neigh));
                 }
             } else {
-                // !!!graful fiind neorientat as updata fiecare copil in functie de
+                // !!!graful fiind neorientat as actualiza fiecare copil in functie de
                 // parintele sau - trebuie sa am grija sa nu fac asta
                 if (neigh != parent[node]) {
                     // am gasit o muchie de intoarcere

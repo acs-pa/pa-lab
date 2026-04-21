@@ -109,16 +109,6 @@ public class sol1_tarjan {
         }
 
         private ArrayList<ArrayList<Integer>> getResult() {
-            //
-            // TODO: Gasiti componentele biconexe (BCC) ale grafului neorientat cu n noduri, stocat in adj.
-            //
-            // Rezultatul se va returna sub forma unui vector, fiecare element fiind un BCC (adica tot un vector).
-            // * nodurile dintr-un BCC pot fi gasite in orice ordine
-            // * BCC-urile din graf pot fi gasite in orice ordine
-            //
-            // Indicatie: Folositi algoritmul lui Tarjan pentru BCC.
-            //
-
             return tarjan_bcc();
         }
 
