@@ -41,11 +41,6 @@ private:
     }
 
     vector<vector<int>> get_result() {
-        // TODO: Gasiti componentele tare conexe ale grafului orientat cu n noduri, stocat in adj.
-        // Rezultatul se va returna sub forma unui vector, ale carui elemente sunt componentele tare conexe detectate.
-        // Nodurile si componentele tare conexe pot fi puse in orice ordine in vector.
-        //
-
         // Aceasta solutia foloseste algoritmul lui Kosaraju.
         // Atentie: graful transpus este stocat in adj_trans.
         return ctc_kosaraju();

@@ -26,22 +26,22 @@ private:
     // exemplu: daca adj[node] = {..., neigh, ...} => exista arcul (node, neigh)
     vector<int> adj[NMAX];
 
-    // parent[node] = parent of node in the DFS traversal
+    // parent[node] = parintele nodului node in parcurgerea DFS
     vector<int> parent;
 
-    // found[node] = the timestamp when node was found (when started to visit its subtree)
-    // Note: The global timestamp is incremented everytime a node is found.
+    // found[node] = momentul cand nodul a fost descoperit (cand a inceput vizitarea subarborelui sau)
+    // Observatie: timestamp-ul global creste de fiecare data cand este descoperit un nod.
     vector<int> found;
 
-    // the minimum accessible timestamp that node can see/access
-    // low_link[node] =  min { found[x] | x is node OR x in ancestors(node) OR x in descendants(node) };
+    // cel mai mic timestamp accesibil pe care il poate vedea/accesa nodul
+    // low_link[node] = min { found[x] | x este node SAU x este in stramosii(node) SAU x este in descendentii(node) };
     vector<int> low_link;
 
-    // visiting stack: nodes are pushed into the stack in visiting order
+    // stiva de vizitare: nodurile sunt puse in stiva in ordinea vizitarii
     stack<int> nodes_stack;
 
-    // in_stack[node] = true, if node is in stack
-    //                  false, otherwise
+    // in_stack[node] = true, daca nodul este in stiva
+    //                  false, altfel
     vector<bool> in_stack;
 
     void read_input() {
@@ -55,34 +55,24 @@ private:
     }
 
     vector<vector<int>> get_result() {
-        //
-        // TODO: Găsiți componentele tare conexe  (CTC / SCC) ale grafului orientat cu n noduri, stocat în adj.
-        //
-        // Rezultatul se va returna sub forma unui vector, fiecare element fiind un SCC (adică tot un vector).
-        // * nodurile dintr-un SCC pot fi găsite în orice ordine
-        // * SCC-urile din graf pot fi găsite în orice ordine
-        //
-        // Indicație: Folosiți algoritmul lui Tarjan pentru SCC.
-        //
-
         return tarjan_scc();
     }
 
     vector<vector<int>> tarjan_scc() {
-        // STEP 1: initialize results
+        // PASUL 1: initializez rezultatele
         parent = vector<int>(n + 1, -1);
         found = vector<int>(n + 1, -1);
         low_link = vector<int>(n + 1, -1);
         in_stack = vector<bool>(n + 1, false);
 
-        // STEP 2: visit all nodes
+        // PASUL 2: vizitez toate nodurile
         vector<vector<int>> all_sccs;
-        int timestamp = 0; // global timestamp
+        int timestamp = 0; // timestamp global
         for (int node = 1; node <= n; ++node) {
-            if (parent[node] == -1) { // node not visited
-                parent[node] = node; // convention: the parent of the root is actually the root
+            if (parent[node] == -1) { // nod nevizitat
+                parent[node] = node; // conventie: parintele radacinii este chiar radacina
 
-                // STEP 3: start a new DFS traversal this subtree
+                // PASUL 3: pornesc o noua parcurgere DFS pe acest subarbore
                 dfs(node, timestamp, all_sccs);
             }
         }
@@ -91,39 +81,39 @@ private:
     }
 
     void dfs(int node, int& timestamp, vector<vector<int>>& all_sccs) {
-        // STEP 1: a new node is visited - increment the timestamp
-        found[node] = ++timestamp; // the timestamp when node was found
-        low_link[node] = found[node]; // node only knows its timestamp
-        nodes_stack.push(node); // add node to the visiting stack
+        // PASUL 1: un nod nou este vizitat - incrementez timestamp-ul
+        found[node] = ++timestamp; // timestamp-ul la care nodul a fost descoperit
+        low_link[node] = found[node]; // nodul cunoaste doar propriul timestamp
+        nodes_stack.push(node); // adaug nodul in stiva de vizitare
         in_stack[node] = true;
 
-        // STEP 2: visit each neighbour
+        // PASUL 2: vizitez fiecare vecin
         for (auto neigh : adj[node]) {
-            // STEP 3: check if neigh is already visited
+            // PASUL 3: verific daca neigh este deja vizitat
             if (parent[neigh] != -1) {
-                // STEP 3.1: update low_link[node] with information gained through neigh
-                // note: neigh is in the same SCC with node only if it's in the visiting stack;
-                // otherwise, neigh is from other SCC, so it should be ignored
+                // PASUL 3.1: actualizez low_link[node] cu informatiile obtinute prin neigh
+                // observatie: neigh este in aceeasi CTC cu node doar daca este in stiva de vizitare;
+                // altfel, neigh este din alta CTC, deci trebuie ignorat
                 if (in_stack[neigh]) {
                     low_link[node] = min(low_link[node], found[neigh]);
                 }
                 continue;
             }
 
-            // STEP 4: save parent
+            // PASUL 4: salvez parintele
             parent[neigh] = node;
 
-            // STEP 5: recursively visit the child subree
+            // PASUL 5: vizitez recursiv subarborele copilului
             dfs(neigh, timestamp, all_sccs);
 
-            // STEP 6: update low_link[node] with information gained through neigh
+            // PASUL 6: actualizez low_link[node] cu informatiile obtinute prin neigh
             low_link[node] = min(low_link[node], low_link[neigh]);
         }
 
-        // STEP 7: node is root in a SCC if low_link[node] == found[node]
-        // (there is no edge from a descendant to an ancestor)
+        // PASUL 7: nodul este radacina unei CTC daca low_link[node] == found[node]
+        // (nu exista muchie de la un descendent la un stramos)
         if (low_link[node] == found[node]) {
-            // STEP 7.1: pop all elements above node from stack => extract the SCC where node is root
+            // PASUL 7.1: extrag toate elementele de deasupra lui node din stiva => obtin CTC-ul in care node este radacina
             vector<int> scc;
             do {
                 auto x = nodes_stack.top();
@@ -131,9 +121,9 @@ private:
                 in_stack[x] = false;
 
                 scc.push_back(x);
-            } while (scc.back() != node); // stop when node was popped from the stack
+            } while (scc.back() != node); // ma opresc cand node a fost scos din stiva
 
-            // STEP 7.2: save SCC
+            // PASUL 7.2: salvez CTC-ul
             all_sccs.push_back(scc);
         }
     }
