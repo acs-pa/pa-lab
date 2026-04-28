@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
-public class sol1_rebuild {
+public class RebuildPath {
     static class Task {
         public static final String INPUT_FILE = "in";
         public static final String OUTPUT_FILE = "out";
@@ -26,7 +26,7 @@ public class sol1_rebuild {
         int[] parent;
 
         // nodul sursa si nodul destinatie
-        // (captele drumului care trebuie reconstruit)
+        // (capetele drumului care trebuie reconstruit)
         int source, destination;
 
         public void solve() {
@@ -74,12 +74,6 @@ public class sol1_rebuild {
         }
 
         private ArrayList<Integer> getResult() {
-            //
-            // TODO: Reconstituiti drumul de cost minim de la nodul source la nodul destination
-            // folosind vectorul de parinti parent.
-            //
-            // In cazul in care exista nu exista un drum de la sursa la destinatie, returnati
-            // un vector gol (a.k.a. return new ArrayList<>();).
             //
             ArrayList<Integer> path = new ArrayList<>();
 

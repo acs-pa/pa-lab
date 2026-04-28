@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class sol1_bellman {
+public class Bellman {
     static class Task {
         public static final String INPUT_FILE = "in";
         public static final String OUTPUT_FILE = "out";
@@ -122,24 +122,6 @@ public class sol1_bellman {
         }
 
         private BellmanFordResult getResult() {
-            //
-            // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
-            // folosind Bellman-Ford pe graful orientat cu n noduri, m arce stocat in adj.
-            // d[node] = costul minim / lungimea minima a unui drum de la source la nodul
-            // node;
-            // d[source] = 0;
-            // d[node] = -1, daca nu se poate ajunge de la source la node.
-            //
-            // Atentie:
-            // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
-            // adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar
-            // (node, neigh) are cost w.
-            //
-            // In cazul in care exista ciclu de cost negativ, returnati un obiect de tipul
-            // BellmanFordResult cu campul has_cycle setat pe true si doi vectori fara
-            // elemente;
-            //
-
             // Construiesc un vector de muchii.
             List<Edge> edges = new ArrayList<>();
 
