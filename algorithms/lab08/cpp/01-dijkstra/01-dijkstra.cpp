@@ -53,19 +53,6 @@ private:
     }
 
     DijkstraResult get_result() {
-        //
-        // TODO: Gasiti distantele minime de la nodul source la celelalte noduri
-        // folosind Dijkstra pe graful orientat cu n noduri, m arce stocat in adj.
-        //
-        // d[node] = costul minim / lungimea minima a unui drum de la source la nodul node
-        //     * d[source] = 0;
-        //     * d[node] = -1, daca nu se poate ajunge de la source la node.
-        //
-        // Atentie:
-        // O muchie este tinuta ca o pereche (nod adiacent, cost muchie):
-        //     adj[node][i] == (neigh, w) - unde neigh este al i-lea vecin al lui node, iar (node, neigh) are cost w.
-        //
-
         return dijkstra(source, n, adj);
     }
 
