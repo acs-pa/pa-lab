@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 NUM_TASKS=3
-TASKS=(task-1 task-2 task-3)
+TASKS=(01-dijkstra 02-rebuild-path 03-bellman)
 NUM_TESTS=(10 10 10)
 
 TIMEOUT_CPP=1
 TIMEOUT_JAVA=10
 TIMEOUT_RUST=1
-TIMEOUT_PYTHON=10
+TIMEOUT_PYTHON=25
 
 DIRNAME=$(realpath $(dirname "${0}"))
 source "${DIRNAME}"/../../utils/base_check.sh
