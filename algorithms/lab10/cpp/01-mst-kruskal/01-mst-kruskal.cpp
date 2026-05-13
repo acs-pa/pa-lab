@@ -117,15 +117,6 @@ private:
 
     MSTResult get_result() {
         //
-        // TODO: Calculati costul minim al unui MST folosind Kruskal.
-        //
-        //
-        // Vi se da implementarea DisjointSet. Exemple utilizare:
-        //      DisjointSet disjointset(n);
-        //      auto setX = disjointset.setOf(x);
-        //      ...
-        //      disjointset.union(x, y);
-        //
         return kruskal(n, edges);
     }
 
