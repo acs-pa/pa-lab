@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 NUM_TASKS=2
-TASKS=(task-1 task-2)
-NUM_TESTS=(10 0)
+TASKS=(01-mst-kruskal 02-mst-prim)
+NUM_TESTS=(10 10)
 
 TIMEOUT_CPP=1
 TIMEOUT_JAVA=7

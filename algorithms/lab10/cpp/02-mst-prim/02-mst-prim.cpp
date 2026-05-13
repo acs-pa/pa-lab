@@ -64,8 +64,6 @@ private:
     }
 
     MSTResult get_result() {
-        // TODO: Calculati costul minim al unui MST folosind algoritmul lui Prim.
-        // Alegem pentru simplitate nodul de start 1.
         return prim(n, edges);
     }
 

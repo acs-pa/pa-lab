@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class sol1_mst_kruskal {
+public class MstKruskal {
     static class Task {
         public static final String INPUT_FILE = "in";
         public static final String OUTPUT_FILE = "out";
@@ -152,17 +152,6 @@ public class sol1_mst_kruskal {
         }
 
         private MSTResult getResult() {
-            //
-            // TODO: Calculati costul minim al unui MST folosind Kruskal.
-            //
-            //
-            // Vi se da implementarea DisjointSet. Exemple utilizare:
-            //      DisjointSet disjointset = new DisjointSet(n);
-            //      int setX = disjointset.setOf(x);
-            //      ...
-            //      disjointset.union(x, y);
-            //
-
             return kruskal(n, edges);
         }
 

@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
-public class sol2_mst_prim {
+public class MstPrim {
     static class Task {
         public static final String INPUT_FILE = "in";
         public static final String OUTPUT_FILE = "out";
@@ -102,8 +102,6 @@ public class sol2_mst_prim {
         }
 
         private MSTResult getResult() {
-            // TODO: Calculati costul minim al unui MST folosind algoritmul lui Prim.
-            // Alegem pentru simplitate nodul de start 1.
             return prim(n, edges, 1);
         }
 
